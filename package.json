@@ -1,0 +1,22 @@
+{
+  "name": "o2o-wxapp-pc",
+  "version": "1.0.0",
+  "description": "🍕 a full-stack application of O2O ( pc section )",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanwarke/o2o-wxapp-pc.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanwarke/o2o-wxapp-pc/issues"
+  },
+  "homepage": "https://github.com/ivanwarke/o2o-wxapp-pc#readme",
+  "devDependencies": {
+    "babel-eslint": "^8.0.3"
+  }
+}
