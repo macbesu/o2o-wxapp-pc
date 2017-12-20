@@ -5,7 +5,7 @@ const buildPath = path.resolve(__dirname, 'dist');
 
 module.exports = {
   devtool: "inline-source-map",
-  entry: path.resolve(sourcePath, 'index.js'),
+  entry: path.resolve(sourcePath, 'app.js'),
   output: {
     path: buildPath,
     filename: 'bundle.js',
