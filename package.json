@@ -2,15 +2,16 @@
   "name": "o2o-wxapp-pc",
   "version": "1.0.0",
   "description": "🍕 a full-stack application of O2O ( pc section )",
-  "main": ".eslintrc.js",
+  "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-dev-server --hot --open --content-base ./dist/",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ivanwarke/o2o-wxapp-pc.git"
   },
-  "author": "",
+  "author": "Ivan Warke <iveon.cc@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ivanwarke/o2o-wxapp-pc/issues"
