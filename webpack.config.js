@@ -10,7 +10,7 @@ module.exports = {
     path: buildPath,
     filename: 'bundle.js',
   },
-  module: {
+  module: { 
     rules: [
       {
         test: /\.jsx?$/,
