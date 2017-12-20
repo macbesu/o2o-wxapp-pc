@@ -18,5 +18,5 @@ ReactDOM.render(
       <Routes />
     </HashRouter>
   </MuiThemeProvider>,
-  document.getElementById('app')
+  document.getElementById('root')
 );
