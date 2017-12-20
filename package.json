@@ -4,8 +4,9 @@
   "description": "🍕 a full-stack application of O2O ( pc section )",
   "main": "./src/app.js",
   "scripts": {
-    "start": "NODE_ENV=production webpack-dev-server --hot --open --content-base ./dist/",
-    "build": "webpack"
+    "start": "webpack-dev-server --hot --open --content-base ./dist/",
+    "build": "webpack",
+    "prettier": "prettier --single-quote --print-width 200 --trailing-comma all --write 'src/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,8 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-hmre": "^1.1.1",
+    "eslint-config-prettier": "^2.9.0",
+    "prettier": "^1.9.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "webpack": "^3.10.0",
