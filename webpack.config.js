@@ -9,7 +9,7 @@ module.exports = {
   entry: path.resolve(sourcePath, 'app.js'),
   output: {
     path: buildPath,
-    filename: '[name].bundle.js',
+    filename: 'bundle.js',
   },
   module: { 
     rules: [

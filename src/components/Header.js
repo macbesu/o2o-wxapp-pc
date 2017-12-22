@@ -14,21 +14,20 @@ class Header extends React.Component {
     return (
       <div>
         <AppBar
-          title="Title"
+          title="润っ餐饮"
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
-        111
+        
       </div>
     );
   }
 }
 
 const styles = {
-  headerbox: {
-    width: '1140px',
-    margin: '0 auto'
-  }
-}
+  headerBlueTheme: {
+    backgroundColor: 'rgb(33, 150, 243)',
+  },
+};
 
 
 export default Header;

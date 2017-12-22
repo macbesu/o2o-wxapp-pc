@@ -9,14 +9,44 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Routes from './routes';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Header from './components/Header';
+import Nav from './components/Nav';
 
 injectTapEventPlugin();
 
+const styles = {
+  app: {
+    width: '1140px',
+    margin: '0 auto',
+  },
+  main: {
+    display: 'flex',
+  },
+  nav: {
+    width: '360px',
+  },
+  content: {
+    flex: '1',
+  },
+};
+
 ReactDOM.render(
   <MuiThemeProvider>
-    <HashRouter basename='/'>
-      <Routes />
-    </HashRouter>
+    <div style={styles.app}>
+      <Header />
+      <div style={styles.main}>
+        <div style={styles.nav}>
+          <Nav />
+        </div>
+        <div style={styles.content}>
+          <HashRouter basename='/'>
+            <Routes />
+          </HashRouter>
+        </div>
+      </div>
+    </div>
+    
   </MuiThemeProvider>,
   document.getElementById('root')
 );
+
