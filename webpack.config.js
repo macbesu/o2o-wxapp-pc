@@ -9,7 +9,7 @@ module.exports = {
   entry: path.resolve(sourcePath, 'app.js'),
   output: {
     path: buildPath,
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
   },
   module: { 
     rules: [
@@ -34,4 +34,10 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.coffee'],
   },
+  plugins: [
+    // new webpack.DefinePlugin({
+    //   'process.env.NODE_ENV': JSON.stringify('production')
+    // }),
+    // new webpack.optimize.UglifyJsPlugin()
+  ]
 };

@@ -2,8 +2,8 @@ import 'babel-polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+// import { Provider } from 'react-redux';
+// import { createStore } from 'redux';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
