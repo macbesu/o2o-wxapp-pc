@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { VERSION } from '../config';
+import { VERSION } from '../config/utils';
 import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';

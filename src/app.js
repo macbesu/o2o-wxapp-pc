@@ -16,7 +16,7 @@ injectTapEventPlugin();
 
 const styles = {
   app: {
-    width: '1140px',
+    width: '1360px',
     margin: '0 auto',
   },
   nav: {
