@@ -23,7 +23,7 @@ const styles = {
     display: 'flex',
   },
   nav: {
-    width: '360px',
+    width: '220px',
   },
   content: {
     flex: '1',

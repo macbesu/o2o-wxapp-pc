@@ -15,12 +15,13 @@ class Nav extends React.Component {
   render() {
     return (
       <div>
-        <Paper>
-          <Menu>
-            <MenuItem primaryText="Maps" />
-            <MenuItem primaryText="Books" />
-            <MenuItem primaryText="Flights" />
-            <MenuItem primaryText="Apps" />
+        <Paper style={styles.paper}>
+          <Menu menuItemStyle={styles.menu}>
+            <MenuItem primaryText="菜单" />
+            <MenuItem primaryText="分类" />
+            <MenuItem primaryText="订单" />
+            <MenuItem primaryText="优惠券" />
+            <MenuItem primaryText="用户" />
           </Menu>
         </Paper>
       </div>
@@ -28,5 +29,14 @@ class Nav extends React.Component {
   }
 
 }
+
+const styles = {
+  paper: {
+    margin: '16px 0 16px 0',
+  },
+  menu: {
+    width: '220px',
+  }
+};
 
 export default Nav;
