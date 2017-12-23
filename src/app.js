@@ -12,6 +12,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from './components/Header';
 import Nav from './components/Nav';
 
+import './components/styles/reset.css';
+import './components/styles/common.css';
+
 injectTapEventPlugin();
 
 const styles = {
