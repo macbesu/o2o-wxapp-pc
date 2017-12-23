@@ -19,14 +19,12 @@ const styles = {
     width: '1140px',
     margin: '0 auto',
   },
-  main: {
-    display: 'flex',
-  },
   nav: {
-    width: '220px',
+    width: '200px',
+    float: 'left',
   },
   content: {
-    flex: '1',
+    float: 'right',
   },
 };
 
@@ -34,7 +32,7 @@ ReactDOM.render(
   <MuiThemeProvider>
     <div style={styles.app}>
       <Header />
-      <div style={styles.main}>
+      <div>
         <div style={styles.nav}>
           <Nav />
         </div>
