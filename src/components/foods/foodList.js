@@ -5,6 +5,8 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import FontIcon from 'material-ui/FontIcon';
+import DeleteIcon from 'material-ui/svg-icons/content/clear';
 import requestData from '../../config/api';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
@@ -39,6 +41,12 @@ class Nav extends React.Component {
 
   }
 
+  deleteAction() {
+    this.setState({
+      showSelectMore: true
+    });
+  }
+
   render() {
     return (
       <div>
@@ -59,11 +67,16 @@ class Nav extends React.Component {
             <TextField hintText="搜索食品" style={styles.textInput} />
           </div>
           <div style={styles.pullRight}>
-            <RaisedButton label="多选删除" style={styles.btns} />
+            <RaisedButton label="删除" 
+              style={styles.btns} 
+              labelPosition="before" 
+              icon={<DeleteIcon style={{width: '21px', height: '21px', marginTop: '-1px'}}/>} 
+              onClick={() => this.deleteAction()}
+            />
           </div>
         </div>
         <div style={styles.table}>
-          <Table>
+          <Table multiSelectable={true}>
             <TableHeader displaySelectAll={this.state.showSelectMore} adjustForCheckbox={this.state.showSelectMore}>
               <TableRow>
                 <TableHeaderColumn style={tableColStyles.col1}>图片</TableHeaderColumn>
