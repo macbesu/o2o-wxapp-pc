@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -92,8 +93,7 @@ class Nav extends React.Component {
             <RaisedButton label="增加" 
               style={styles.btns}
               labelPosition="before" 
-              icon={<AddIcon style={{width: '21px', height: '21px', marginTop: '-1px'}}/>} 
-              onClick={() => this.deleteAction()}
+              icon={<AddIcon style={{width: '21px', height: '21px', marginTop: '-1px'}}/>}
             />
             <RaisedButton label="删除" 
               style={styles.btns} 
@@ -130,7 +130,9 @@ class Nav extends React.Component {
                     <TableRowColumn>{item.category.categoryName}</TableRowColumn>
                     <TableRowColumn>{item.sellout ? '是' : '否'}</TableRowColumn>
                     <TableRowColumn>{item.favoriteCount}</TableRowColumn>
-                    <TableRowColumn style={styles.checkMore}>查看 / 修改</TableRowColumn>
+                    <TableRowColumn>
+                      <Link to={`/editfood/${item._id}`} style={styles.checkMore}>查看 / 修改</Link>
+                    </TableRowColumn>
                   </TableRow>)
               }
             </TableBody>
