@@ -6,6 +6,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
+import AddIcon from 'material-ui/svg-icons/content/add';
 import DeleteIcon from 'material-ui/svg-icons/content/clear';
 import requestData from '../../config/api';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
@@ -14,14 +15,16 @@ class Nav extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      list: [],
-      category: 1,
+      foods: [],
+      categories: [],
+      categoryFilter: null,
       showSelectMore: false,
     }
   }
 
   componentWillMount() {
     this.fetchData();
+    this.getCategories();
   }
 
   fetchData() {
@@ -29,7 +32,7 @@ class Nav extends React.Component {
     requestData('getFoodList', 'get')
       .then((res) => {
         self.setState({
-          list: res.data
+          foods: res.data
         });
       })
       .catch((e) => {
@@ -37,8 +40,23 @@ class Nav extends React.Component {
       });
   }
 
-  handleChange() {
+  getCategories() {
+    const self = this;
+    requestData('getCategorylist', 'get')
+      .then((res) => {
+        self.setState({
+          categories: res.data
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
 
+  handleCategoryChange(e, key, payload) {
+    this.setState({
+      categoryFilter: payload,
+    });
   }
 
   deleteAction() {
@@ -54,19 +72,29 @@ class Nav extends React.Component {
           <div style={styles.pullLeft}>
             <SelectField
               floatingLabelText="按分类查找"
-              value={this.state.category}
-              onChange={this.handleChange}
+              value={this.state.categoryFilter}
+              onChange={(e, key, payload) => this.handleCategoryChange(e, key, payload)}
               style={styles.pullLeft}
             >
-              <MenuItem value={1} primaryText="Never" />
-              <MenuItem value={2} primaryText="Every Night" />
-              <MenuItem value={3} primaryText="Weeknights" />
-              <MenuItem value={4} primaryText="Weekends" />
-              <MenuItem value={5} primaryText="Weekly" />
+            {
+              this.state.categories.map((item, index) => 
+                <MenuItem 
+                  key={item._id} 
+                  value={item._id} 
+                  primaryText={item.categoryName}
+                />
+              )
+            }
             </SelectField>
             <TextField hintText="搜索食品" style={styles.textInput} />
           </div>
           <div style={styles.pullRight}>
+            <RaisedButton label="增加" 
+              style={styles.btns}
+              labelPosition="before" 
+              icon={<AddIcon style={{width: '21px', height: '21px', marginTop: '-1px'}}/>} 
+              onClick={() => this.deleteAction()}
+            />
             <RaisedButton label="删除" 
               style={styles.btns} 
               labelPosition="before" 
@@ -91,8 +119,8 @@ class Nav extends React.Component {
             </TableHeader>
             <TableBody displayRowCheckbox={this.state.showSelectMore} stripedRows={false}>
               {
-                this.state.list.map((item, index) =>
-                  <TableRow key={index}>
+                this.state.foods.map((item, index) =>
+                  <TableRow key={item._id}>
                     <TableRowColumn style={tableColStyles.col1}>
                       <img src={item.imageUrl} style={styles.images}/>
                     </TableRowColumn>
@@ -121,7 +149,7 @@ const styles = {
     padding: '0 36px',
   },
   btns: {
-    margin: '25px 0 0 0',
+    margin: '25px 0 0 12px',
   },
   textInput: {
     padding: '24px 0 0 0',

@@ -2,7 +2,15 @@ import axios from 'axios';
 
 const prefix = 'http://localhost:3000/api/v1/';
 const apiSet = {
+  /**
+   * foods
+   */
   getFoodList: 'foods/',
+
+  /**
+   * categories
+   */
+  getCategorylist: 'categories/',
 };
 const requestType = ['get', 'post', 'delete', 'patch'];
 
