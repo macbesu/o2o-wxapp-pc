@@ -10,10 +10,15 @@ class EditFood extends React.Component {
     }
   }
 
+  componentWillMount() {
+    // console.log(this);
+  }
+
   render() {
     return (
       <div>
-        11
+        <div>
+        </div>
       </div>
     );
   }
