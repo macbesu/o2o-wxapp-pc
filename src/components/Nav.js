@@ -46,8 +46,8 @@ const styles = {
   paper1: {
     display: 'flex',
     margin: '16px 0 0 0',
-    height: '56px',
-    lineHeight: '56px',
+    height: '52px',
+    lineHeight: '52px',
     textAlign: 'center',
     color: '#999',
   },
@@ -58,7 +58,7 @@ const styles = {
     width: '200px',
   },
   iconStyles: {
-    margin: '15px 10px 0 16px',
+    margin: '12px 10px 0 16px',
   },
 };
 
