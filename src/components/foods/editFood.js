@@ -21,7 +21,7 @@ class EditFood extends React.Component {
     return (
       <div>
         <div className="card-detail-item">
-          <div >1</div>
+          <div className="card-detail-item-">1</div>
           <div>2</div>
         </div>
       </div>

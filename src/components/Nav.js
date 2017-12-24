@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { VERSION } from '../config/utils';
 import Paper from 'material-ui/Paper';
@@ -59,10 +60,11 @@ class Nav extends React.Component {
         </Paper>
         <Paper style={styles.paper2}>
           <Menu 
-            menuItemStyle={styles.menu}
             selectedMenuItemStyle={{background: '#f00'}}
           >
-            <MenuItem style={this.state.mis.s0} primaryText="菜单" onClick={() => this.changeMenu(0)} rightIcon={<FoodIcon style={this.state.mis.s0}/>} />
+            <Link to={`/foodlist`} style={styles.menu}>
+              <MenuItem style={this.state.mis.s0} primaryText="菜单" onClick={() => this.changeMenu(0)} rightIcon={<FoodIcon style={this.state.mis.s0}/>} />
+            </Link>
             <MenuItem style={this.state.mis.s1} primaryText="分类" onClick={() => this.changeMenu(1)} rightIcon={<CategoryIcon style={this.state.mis.s1} />} />
             <MenuItem style={this.state.mis.s2} primaryText="订单" onClick={() => this.changeMenu(2)} rightIcon={<OrdersIcon style={this.state.mis.s2} />} />
             <MenuItem style={this.state.mis.s3} primaryText="优惠券" onClick={() => this.changeMenu(3)} rightIcon={<CouponIcon style={this.state.mis.s3} />} />
@@ -88,7 +90,7 @@ const styles = {
     margin: '16px 0 0 0',
   },
   menu: {
-    width: '200px',
+    width: '120px',
   },
   iconStyles: {
     margin: '12px 10px 0 16px',
