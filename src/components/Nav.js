@@ -17,30 +17,12 @@ class Nav extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      mis: {
-        s0: null,
-        s1: null,
-        s2: null,
-        s3: null,
-        s4: null,
-      },
+
     }
   }
 
   componentWillMount() {
     
-  }
-
-  changeMenu(newFocusIndex) {
-      this.setState({
-        mis: {
-          [`s${newFocusIndex}`]: {
-            color: '#00BCD4',
-            fill: '#00BCD4',
-          },
-        },
-      });
-      localStorage.setItem('menu', newFocusIndex);
   }
 
   render() {

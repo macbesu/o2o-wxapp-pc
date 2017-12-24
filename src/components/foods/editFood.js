@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Paper from 'material-ui/Paper';
+import { CardDetailImage, CardDetailText } from '../utils/CardDetailItem';
 
 class EditFood extends React.Component {
   constructor(props) {
@@ -20,10 +21,7 @@ class EditFood extends React.Component {
   render() {
     return (
       <div>
-        <div className="card-detail-item">
-          <div className="card-detail-item-">1</div>
-          <div>2</div>
-        </div>
+        <CardDetailImage />
       </div>
     );
   }
