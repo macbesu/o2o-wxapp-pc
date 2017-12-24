@@ -18,7 +18,7 @@ class Nav extends React.Component {
     this.state = {
       foods: [],
       categories: [],
-      categoryFilter: null,
+      categoryFilter: undefined,
       showSelectMore: false,
     }
   }
@@ -32,9 +32,7 @@ class Nav extends React.Component {
     const self = this;
     requestGetData('getFoodList', 'get')
       .then((res) => {
-        self.setState({
-          foods: res.data
-        });
+        self.setState({ foods: res.data });
       })
       .catch((e) => {
         console.error(e);

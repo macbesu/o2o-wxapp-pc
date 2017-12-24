@@ -10,8 +10,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Routes from './routes';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import './components/styles/reset.css';
-import './components/styles/common.css';
+import './components/styles/index.less';
 
 injectTapEventPlugin();
 

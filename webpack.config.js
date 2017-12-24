@@ -27,7 +27,6 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: sourcePath,
         loader: 'style-loader!css-loader',
       },
     ],

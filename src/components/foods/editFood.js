@@ -8,7 +8,7 @@ class EditFood extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      id: null,
+      food: {},
     }
   }
 
@@ -19,18 +19,26 @@ class EditFood extends React.Component {
   fetchData() {
     const self = this;
     requestGetData('getFoodById', 'get', self.props.match.params.id)
-    .then((res) => {
-      console.warn(res);
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+      .then((res) => {
+        self.setState({ food: res.data });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
+
+  changeFoodName(val) {
+    const food = Object.assign({}, this.state.food);
+    food.foodName = val;
+    this.setState({ food });
   }
 
   render() {
     return (
-      <div>
-        <CardDetailImage label={'图片'} imageUrl={'1'}/>
+      <div className="card-detail-box">
+        <CardDetailImage label={'图片'} imageUrl={this.state.food.imageUrl} />
+        <CardDetailText label={'ID'} text={this.state.food._id} textDisabled={true}  />
+        <CardDetailText label={'名字'} text={this.state.food.foodName} textChange={val => this.changeFoodName(val) } />
       </div>
     );
   }
