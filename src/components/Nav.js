@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { VERSION } from '../config/utils';
 import Paper from 'material-ui/Paper';
@@ -28,15 +28,7 @@ class Nav extends React.Component {
   }
 
   componentWillMount() {
-    const focusMenuIndex = localStorage.getItem('menu') || 0;
-    this.setState({
-      mis: {
-        [`s${focusMenuIndex}`]: {
-          color: '#00BCD4',
-          fill: '#00BCD4',
-        },
-      },
-    });
+    
   }
 
   changeMenu(newFocusIndex) {
@@ -59,16 +51,22 @@ class Nav extends React.Component {
           版本：v{VERSION}
         </Paper>
         <Paper style={styles.paper2}>
-          <Menu 
-            selectedMenuItemStyle={{background: '#f00'}}
-          >
-            <Link to={`/foodlist`} style={styles.menu}>
-              <MenuItem style={this.state.mis.s0} primaryText="菜单" onClick={() => this.changeMenu(0)} rightIcon={<FoodIcon style={this.state.mis.s0}/>} />
-            </Link>
-            <MenuItem style={this.state.mis.s1} primaryText="分类" onClick={() => this.changeMenu(1)} rightIcon={<CategoryIcon style={this.state.mis.s1} />} />
-            <MenuItem style={this.state.mis.s2} primaryText="订单" onClick={() => this.changeMenu(2)} rightIcon={<OrdersIcon style={this.state.mis.s2} />} />
-            <MenuItem style={this.state.mis.s3} primaryText="优惠券" onClick={() => this.changeMenu(3)} rightIcon={<CouponIcon style={this.state.mis.s3} />} />
-            <MenuItem style={this.state.mis.s4} primaryText="用户" onClick={() => this.changeMenu(4)} rightIcon={<UserIcon style={this.state.mis.s4} />} />
+          <Menu autoWidth={false} width={220}>
+            <NavLink to={`/foodlist`} style={styles.navlink} activeStyle={styles.activeStyle}>
+              <MenuItem primaryText="菜单" rightIcon={<FoodIcon/>} />
+            </NavLink>
+            <NavLink to={`/editfood/2382193810`} style={styles.navlink} activeStyle={styles.activeStyle}>
+              <MenuItem primaryText="分类" rightIcon={<CategoryIcon />} />
+            </NavLink>
+            <NavLink to={`/1`} style={styles.navlink} activeStyle={styles.activeStyle}>
+              <MenuItem primaryText="订单" rightIcon={<OrdersIcon />} />
+            </NavLink>
+            <NavLink to={`/2`} style={styles.navlink} activeStyle={styles.activeStyle}>
+              <MenuItem primaryText="优惠券" rightIcon={<CouponIcon />} />
+            </NavLink>
+            <NavLink to={`/3`} style={styles.navlink} activeStyle={styles.activeStyle}>
+              <MenuItem primaryText="用户" rightIcon={<UserIcon />} />
+            </NavLink>
           </Menu>
         </Paper>
       </div>
@@ -89,8 +87,12 @@ const styles = {
   paper2: {
     margin: '16px 0 0 0',
   },
-  menu: {
-    width: '120px',
+  navlink: {
+    display:'inline-block', 
+    width: '200px',
+  },
+  activeStyle: {
+    backgroundColor:'#e5e5e5',
   },
   iconStyles: {
     margin: '12px 10px 0 16px',
