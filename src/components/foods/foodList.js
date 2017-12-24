@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { requestGetData } from '../../config/api';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -9,7 +10,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import DeleteIcon from 'material-ui/svg-icons/content/clear';
-import requestData from '../../config/api';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 class Nav extends React.Component {
@@ -30,7 +30,7 @@ class Nav extends React.Component {
 
   fetchData() {
     const self = this;
-    requestData('getFoodList', 'get')
+    requestGetData('getFoodList', 'get')
       .then((res) => {
         self.setState({
           foods: res.data
@@ -43,7 +43,7 @@ class Nav extends React.Component {
 
   getCategories() {
     const self = this;
-    requestData('getCategorylist', 'get')
+    requestGetData('getCategorylist', 'get')
       .then((res) => {
         self.setState({
           categories: res.data
