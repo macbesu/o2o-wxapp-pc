@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TextField from 'material-ui/TextField';
+import Toggle from 'material-ui/Toggle';
 
 class CardDetailImage extends React.Component {
   constructor(props) {
@@ -69,7 +70,44 @@ class CardDetailText extends React.Component {
   }
 }
 
+class CardDetailToggle extends React.Component {
+  constructor(props) {
+    super();
+    this.state = {
+      isInputChecked: true,
+      toggleText: '是',
+    };
+  }
+
+  handleToggle(e, isInputChecked) {
+    this.setState({ 
+      isInputChecked,
+      toggleText: isInputChecked ? '是': '否',
+    });
+  }
+
+  render() {
+    const { label } = this.props;
+    return (
+      <div className="card-detail-item">
+        <div className="card-detail-item-label">
+          {label}：
+        </div>
+        <div className="card-detail-item-toggle">
+          <Toggle
+            label={this.state.toggleText}
+            labelPosition="right"
+            defaultToggled={true}
+            onToggle={(e, isInputChecked) => this.handleToggle(e, isInputChecked)}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
 export {
   CardDetailImage,
   CardDetailText,
+  CardDetailToggle,
 };
