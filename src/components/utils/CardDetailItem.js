@@ -113,25 +113,27 @@ class CardDetailSelect extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      value: true,
-      category: {},
+      selected: {},
+      dataList: [],
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps) {
-			this.setState({ 
-        category: nextProps, 
-      });
+    if (nextProps && nextProps.dataList) {
+      const { selected, dataList } = nextProps;
+      this.setState({ selected, dataList });
 		}
   }
 
-  handleSelect() {
-
+  handleSelect(e, key, payload) {
+    const selected = Object.assign({}, this.state.selected);
+    selected.id = payload;
+    selected.name = e.target.innerText;
+    this.setState({ selected });
   }
 
   render() {
-    const { label, info } = this.props;
+    const { label, unification } = this.props;
     return (
       <div className="card-detail-item">
         <div className="card-detail-item-label">
@@ -139,12 +141,19 @@ class CardDetailSelect extends React.Component {
         </div>
         <div className="card-detail-item-select">
           <SelectField
-            floatingLabelText="Ready?"
-            value={this.state.value}
-            onChange={() => this.handleSelect()}
+            value={this.state.selected.id}
+            style={{ minWidth: '300px' }}
+            onChange={(e, key, payload) => this.handleSelect(e, key, payload)}
           >
-            <MenuItem value={false} primaryText="No" />
-            <MenuItem value={true} primaryText="Yes" />
+            {
+              this.state.dataList.map(item => (
+                <MenuItem 
+                  key={item._id} 
+                  value={item._id} 
+                  primaryText={item[unification]} 
+                />
+              ))
+            }
           </SelectField>
         </div>
       </div>
