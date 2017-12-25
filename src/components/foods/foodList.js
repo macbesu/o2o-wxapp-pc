@@ -30,7 +30,7 @@ class Nav extends React.Component {
 
   fetchData() {
     const self = this;
-    requestGetData('getFoodList', 'get')
+    requestGetData('getFoodList')
       .then((res) => {
         self.setState({ foods: res.data });
       })
@@ -41,7 +41,7 @@ class Nav extends React.Component {
 
   getCategories() {
     const self = this;
-    requestGetData('getCategorylist', 'get')
+    requestGetData('getCategorylist')
       .then((res) => {
         self.setState({
           categories: res.data

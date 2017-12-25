@@ -1,14 +1,23 @@
 import React from 'react';
 
-import { requestGetData } from '../../config/api';
+import { requestGetData, requestPatchData } from '../../config/api';
 import Paper from 'material-ui/Paper';
-import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect } from '../utils/CardDetailItem';
+import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
 
 class EditFood extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      food: {},
+      food: {
+        _id: null,
+        foodName: null,
+        price: null,
+        imageUrl: null,
+        sellout: null, 
+        description: null,
+        category: {},
+        coupon: {},
+      },
       categoryList: [],
       couponList: [],
     }
@@ -22,7 +31,7 @@ class EditFood extends React.Component {
 
   fetchData() {
     const self = this;
-    requestGetData('getFoodById', 'get', self.props.match.params.id)
+    requestGetData('getFoodById', self.props.match.params.id)
       .then((res) => {
         self.setState({ food: res.data });
       })
@@ -33,7 +42,7 @@ class EditFood extends React.Component {
 
   getCategoryList() {
     const self = this;
-    requestGetData('getCategorylist', 'get')
+    requestGetData('getCategorylist')
       .then((res) => {
         self.setState({ categoryList: res.data });
       })
@@ -44,7 +53,7 @@ class EditFood extends React.Component {
 
   getCouponList() {
     const self = this;
-    requestGetData('getCouponList', 'get')
+    requestGetData('getCouponList')
       .then((res) => {
         self.setState({ couponList: res.data });
       })
@@ -71,6 +80,12 @@ class EditFood extends React.Component {
     this.setState({ food });
   }
 
+  changeSellout(val) {
+    const food = Object.assign({}, this.state.food);
+    food.sellout = val;
+    this.setState({ food });
+  }
+
   changeCategory(obj) {
     const food = Object.assign({}, this.state.food);
     food.category._id = obj._id;
@@ -85,12 +100,39 @@ class EditFood extends React.Component {
     this.setState({ food });
   }
 
+  handleUpdate() {
+    const self = this;
+    const { _id, foodName, description, price, imageUrl, sellout } = this.state.food;
+    const category = this.state.food.category._id || null;
+    const coupon = this.state.food.coupon._id || null;
+    const food = { _id, foodName, description, price, imageUrl, sellout, category, coupon }; 
+    requestPatchData('updateFood', self.props.match.params.id, food)
+      .then((res) => {
+        
+      })
+      .catch((err) => {
+        console.error(e);
+      });
+  }
+
+  handleDelete() {
+   
+  }
+
   render() {
     return (
       <div className="card-detail-box">
         <CardDetailImage label={'图片'} imageUrl={this.state.food.imageUrl} />
-        <CardDetailText label={'ID'} text={this.state.food._id} textDisabled={true} />
-        <CardDetailToggle label={'售罄'} truefalse={this.state.food.sellout} />
+        <CardDetailText 
+          label={'ID'} 
+          text={this.state.food._id} 
+          textDisabled={true} 
+        />
+        <CardDetailToggle 
+          label={'售罄'} 
+          truefalse={this.state.food.sellout} 
+          toggleChange={val => this.changeSellout(val)}
+        />
         <CardDetailText 
           label={'名字'} 
           text={this.state.food.foodName} 
@@ -119,6 +161,10 @@ class EditFood extends React.Component {
           unification={'remark'} 
           dataList={this.state.couponList} 
           selectChange={val => this.changeCoupon(val)}
+        />
+        <CardDetailTools 
+          handleUpdate={() => this.handleUpdate()}
+          handleDelete={() => this.handleDelete()}
         />
       </div>
     );

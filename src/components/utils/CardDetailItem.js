@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
+import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
 
 class CardDetailImage extends React.Component {
@@ -87,6 +89,7 @@ class CardDetailToggle extends React.Component {
       isInputChecked,
       toggleText: isInputChecked ? '是': '否',
     });
+    this.props.toggleChange(isInputChecked);
   }
 
   render() {
@@ -162,9 +165,52 @@ class CardDetailSelect extends React.Component {
   }
 }
 
+class CardDetailTools extends React.Component {
+  constructor(props) {
+    super();
+    this.state = {
+      
+    };
+  }
+
+  render() {
+    const styles = {
+      btn: {
+        margin: '0 16px 0 0',
+      }
+    }
+    return (
+      <div className="card-detail-item">
+        <div className="card-detail-item-label">
+          操作：
+        </div>
+        <div className="card-detail-item-tools">
+          <Link to="/foodList">
+            <RaisedButton label="返回" style={styles.btn} />
+          </Link>
+          <RaisedButton 
+            label="保存修改" 
+            primary={true} 
+            style={styles.btn} 
+            onClick={ this.props.handleUpdate } 
+          />
+          <RaisedButton 
+            label="删除" 
+            secondary={true} 
+            style={styles.btn} 
+            onClick={ this.props.handleDelete } 
+          />
+        </div>
+      </div>
+    );
+  }
+  
+} 
+
 export {
   CardDetailImage,
   CardDetailText,
   CardDetailToggle,
   CardDetailSelect,
+  CardDetailTools,
 };
