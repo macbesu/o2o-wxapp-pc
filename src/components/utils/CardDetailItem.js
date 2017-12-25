@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TextField from 'material-ui/TextField';
+import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
 import Toggle from 'material-ui/Toggle';
 
 class CardDetailImage extends React.Component {
@@ -62,6 +64,7 @@ class CardDetailText extends React.Component {
             hintText={`请输入${label}`} 
             value={text} 
             disabled={textDisabled}
+            style={{ minWidth: '300px' }}
             onChange={(e, text) => this.handleChange(e, text)}
           />
         </div>
@@ -87,7 +90,7 @@ class CardDetailToggle extends React.Component {
   }
 
   render() {
-    const { label } = this.props;
+    const { label, truefalse } = this.props;
     return (
       <div className="card-detail-item">
         <div className="card-detail-item-label">
@@ -97,9 +100,52 @@ class CardDetailToggle extends React.Component {
           <Toggle
             label={this.state.toggleText}
             labelPosition="right"
-            defaultToggled={true}
+            toggled={this.state.isInputChecked}
             onToggle={(e, isInputChecked) => this.handleToggle(e, isInputChecked)}
           />
+        </div>
+      </div>
+    );
+  }
+}
+
+class CardDetailSelect extends React.Component {
+  constructor(props) {
+    super();
+    this.state = {
+      value: true,
+      category: {},
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+			this.setState({ 
+        category: nextProps, 
+      });
+		}
+  }
+
+  handleSelect() {
+
+  }
+
+  render() {
+    const { label, info } = this.props;
+    return (
+      <div className="card-detail-item">
+        <div className="card-detail-item-label">
+          {label}：
+        </div>
+        <div className="card-detail-item-select">
+          <SelectField
+            floatingLabelText="Ready?"
+            value={this.state.value}
+            onChange={() => this.handleSelect()}
+          >
+            <MenuItem value={false} primaryText="No" />
+            <MenuItem value={true} primaryText="Yes" />
+          </SelectField>
         </div>
       </div>
     );
@@ -110,4 +156,5 @@ export {
   CardDetailImage,
   CardDetailText,
   CardDetailToggle,
+  CardDetailSelect,
 };
