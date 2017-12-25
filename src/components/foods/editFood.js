@@ -24,10 +24,7 @@ class EditFood extends React.Component {
     const self = this;
     requestGetData('getFoodById', 'get', self.props.match.params.id)
       .then((res) => {
-        const food = Object.assign({}, res.data);
-        food.category.name = food.category.categoryName;
-        food.coupon.name = food.coupon.remark;
-        self.setState({ food });
+        self.setState({ food: res.data });
       })
       .catch((e) => {
         console.error(e);
@@ -68,9 +65,23 @@ class EditFood extends React.Component {
     this.setState({ food });
   }
 
-  changeDescription() {
+  changeDescription(val) {
     const food = Object.assign({}, this.state.food);
     food.description = val;
+    this.setState({ food });
+  }
+
+  changeCategory(obj) {
+    const food = Object.assign({}, this.state.food);
+    food.category._id = obj._id;
+    food.category.categoryName = obj.categoryName;
+    this.setState({ food });
+  }
+
+  changeCoupon(obj) {
+    const food = Object.assign({}, this.state.food);
+    food.coupon._id = obj._id;
+    food.coupon.remark = obj.remark;
     this.setState({ food });
   }
 
@@ -100,12 +111,14 @@ class EditFood extends React.Component {
           selected={this.state.food.category} 
           unification={'categoryName'} 
           dataList={this.state.categoryList} 
+          selectChange={val => this.changeCategory(val)}
         />
         <CardDetailSelect 
           label={'优惠券'} 
           selected={this.state.food.coupon} 
           unification={'remark'} 
           dataList={this.state.couponList} 
+          selectChange={val => this.changeCoupon(val)}
         />
       </div>
     );

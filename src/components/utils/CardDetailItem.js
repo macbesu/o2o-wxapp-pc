@@ -120,16 +120,17 @@ class CardDetailSelect extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps && nextProps.dataList) {
-      const { selected, dataList } = nextProps;
-      this.setState({ selected, dataList });
+      const { selected, dataList, unification } = nextProps;
+      this.setState({ selected, dataList, unification });
 		}
   }
 
   handleSelect(e, key, payload) {
     const selected = Object.assign({}, this.state.selected);
-    selected.id = payload;
-    selected.name = e.target.innerText;
+    selected._id = payload;
+    selected[this.state.unification] = e.target.innerText;
     this.setState({ selected });
+    this.props.selectChange(selected);
   }
 
   render() {
@@ -141,7 +142,7 @@ class CardDetailSelect extends React.Component {
         </div>
         <div className="card-detail-item-select">
           <SelectField
-            value={this.state.selected.id}
+            value={this.state.selected._id}
             style={{ minWidth: '300px' }}
             onChange={(e, key, payload) => this.handleSelect(e, key, payload)}
           >
