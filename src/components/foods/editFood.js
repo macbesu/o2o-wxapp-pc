@@ -1,20 +1,22 @@
 import React from 'react';
 
 import { requestGetData, requestPatchData } from '../../config/api';
-import Paper from 'material-ui/Paper';
 import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
+import Alert from '../utils/Alert';
+import Paper from 'material-ui/Paper';
 
 class EditFood extends React.Component {
   constructor(props) {
     super();
     this.state = {
+      isAddingStatus: true, // ture是增加，false是修改
       food: {
-        _id: null,
-        foodName: null,
-        price: null,
-        imageUrl: null,
-        sellout: null, 
-        description: null,
+        _id: '',
+        foodName: '',
+        price: '',
+        imageUrl: '',
+        sellout: '', 
+        description: '',
         category: {},
         coupon: {},
       },
@@ -24,7 +26,10 @@ class EditFood extends React.Component {
   }
 
   componentWillMount() {
-    this.fetchData();
+    if (this.props.match.params.id) {
+      this.fetchData();
+      this.setState({ isAddingStatus: false });
+    }
     this.getCategoryList();
     this.getCouponList();
   }
@@ -100,19 +105,25 @@ class EditFood extends React.Component {
     this.setState({ food });
   }
 
-  handleUpdate() {
+  handleSave() {
     const self = this;
     const { _id, foodName, description, price, imageUrl, sellout } = this.state.food;
     const category = this.state.food.category._id || null;
     const coupon = this.state.food.coupon._id || null;
     const food = { _id, foodName, description, price, imageUrl, sellout, category, coupon }; 
-    requestPatchData('updateFood', self.props.match.params.id, food)
-      .then((res) => {
-        
-      })
-      .catch((err) => {
-        console.error(e);
-      });
+
+    if (this.state.isAddingStatus) {
+      console.warn(food);
+    } else {
+      requestPatchData('updateFood', self.props.match.params.id, food)
+        .then((res) => {
+          
+        })
+        .catch((err) => {
+         
+        });
+    }
+    
   }
 
   handleDelete() {
@@ -123,11 +134,14 @@ class EditFood extends React.Component {
     return (
       <div className="card-detail-box">
         <CardDetailImage label={'图片'} imageUrl={this.state.food.imageUrl} />
-        <CardDetailText 
-          label={'ID'} 
-          text={this.state.food._id} 
-          textDisabled={true} 
-        />
+        {
+          !this.state.isAddingStatus ? 
+          <CardDetailText 
+            label={'ID'} 
+            text={this.state.food._id} 
+            textDisabled={true} 
+          /> :null
+        }
         <CardDetailToggle 
           label={'售罄'} 
           truefalse={this.state.food.sellout} 
@@ -163,17 +177,14 @@ class EditFood extends React.Component {
           selectChange={val => this.changeCoupon(val)}
         />
         <CardDetailTools 
-          handleUpdate={() => this.handleUpdate()}
+          handleUpdate={() => this.handleSave()}
           handleDelete={() => this.handleDelete()}
         />
+        <Alert open={true} theme="success" msg="保存成功！" />
       </div>
     );
   }
 
 }
-
-const styles = {
-
-};
 
 export default EditFood;

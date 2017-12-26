@@ -1,0 +1,40 @@
+
+.alert-box {
+  min-width: 320px;
+  box-sizing: border-box;
+  border: 1px solid #ebeef5;
+  position: fixed;
+  left: 50%;
+  top: 0;
+  height: 48px;
+  transform: translateX(-50%);
+  background-color: #edf2fc;
+  transition: opacity .3s,transform .4s;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  // -webkit-box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+  // box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.alert-opened {
+  display: block;
+}
+.alert-closed {
+  display: none;
+}
+.alert-theme-success {
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
+.alert-theme-warning {
+  border: 1px solid #FFC107;
+}
+.alert-theme-danger {
+  border: 1px solid #F44336;
+}
+.alert-theme-secondary {
+  border: 1px solid #E91E63;
+}

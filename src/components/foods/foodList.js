@@ -88,11 +88,13 @@ class Nav extends React.Component {
             <TextField hintText="搜索食品" style={styles.textInput} />
           </div>
           <div style={styles.pullRight}>
-            <RaisedButton label="增加" 
-              style={styles.btns}
-              labelPosition="before" 
-              icon={<AddIcon style={{width: '21px', height: '21px', marginTop: '-1px'}}/>}
-            />
+            <Link to="/editFood">
+              <RaisedButton label="增加" 
+                style={styles.btns}
+                labelPosition="before" 
+                icon={<AddIcon style={{width: '21px', height: '21px', marginTop: '-1px'}}/>}
+              />
+            </Link> 
             <RaisedButton label="删除" 
               style={styles.btns} 
               labelPosition="before" 

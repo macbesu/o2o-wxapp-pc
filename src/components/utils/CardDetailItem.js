@@ -23,7 +23,9 @@ class CardDetailImage extends React.Component {
           {label}：
         </div>
         <div className="card-detail-item-image">
-          <img src={imageUrl} />
+          {
+            imageUrl ? <img src={imageUrl} /> : <div className="card-detail-item-default-img"></div>
+          }
         </div>
       </div>
     );
@@ -147,6 +149,7 @@ class CardDetailSelect extends React.Component {
           <SelectField
             value={this.state.selected._id}
             style={{ minWidth: '300px' }}
+            floatingLabelText={`请选择${label}`}
             onChange={(e, key, payload) => this.handleSelect(e, key, payload)}
           >
             {
@@ -189,7 +192,7 @@ class CardDetailTools extends React.Component {
             <RaisedButton label="返回" style={styles.btn} />
           </Link>
           <RaisedButton 
-            label="保存修改" 
+            label="保存" 
             primary={true} 
             style={styles.btn} 
             onClick={ this.props.handleUpdate } 
