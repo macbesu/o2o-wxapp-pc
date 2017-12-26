@@ -71,7 +71,8 @@ export function requestPatchData(url, params='', data) {
 
   return axios.patch(`${prefix}${apiSet[url]}${params}`, data, {
     headers: {
-    }
+      Authorization: token,
+    },
   })
     .then((res) => {
       return res;
