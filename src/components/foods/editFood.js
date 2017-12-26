@@ -2,7 +2,6 @@ import React from 'react';
 
 import { requestGetData, requestPatchData } from '../../config/api';
 import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
-import Alert from '../utils/Alert';
 import Paper from 'material-ui/Paper';
 
 class EditFood extends React.Component {
@@ -180,7 +179,7 @@ class EditFood extends React.Component {
           handleUpdate={() => this.handleSave()}
           handleDelete={() => this.handleDelete()}
         />
-        <Alert open={true} theme="success" msg="保存成功！" />
+       
       </div>
     );
   }

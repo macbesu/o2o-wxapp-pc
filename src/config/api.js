@@ -8,7 +8,8 @@ const apiSet = {
    * foods
    */
   getFoodList: 'foods/',
-  getFoodById: 'foods/',
+  getFoodById: 'foods/id=',
+  getFoodByCategory: 'foods/category=',
   updateFood: 'foods/',
 
   /**

@@ -15,8 +15,10 @@ class Alert extends React.Component {
     return (
       <div className={open ? "alert-opened" : "alert-closed" }>
         <div className={`alert-box alert-theme-${theme ? theme : 'success'}`}>
-          <FontIcon className="muidocs-icon-action-home" />
-          <span>{msg}</span>
+        <FontIcon
+        className="muidocs-icon-action-home"
+      />
+          <span>{theme && theme === 'success' ? "√ " : null}{theme && theme === 'danger' ? "✘ " : null}{msg}</span>
         </div>
       </div>
     );

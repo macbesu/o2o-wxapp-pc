@@ -1,18 +1,21 @@
 .alert-box {
-  min-width: 320px;
+  min-width: 380px;
   box-sizing: border-box;
   position: fixed;
+  border-radius: 0 0 2px 2px;
   left: 50%;
   top: 0;
-  height: 48px;
+  padding: 10px 15px;
+  font-size: 14px;
   transform: translateX(-50%);
-  background-color: #edf2fc;
+  background-color:rgba(255, 255, 255, 0.97);
   transition: opacity .3s,transform .4s;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  // border: 1px solid #ebeef5;
 }
 
 .alert-opened {
@@ -22,17 +25,9 @@
   display: none;
 }
 .alert-theme-success {
-  background-color: #fff;
-  border: 1px dashed #67c23a;
-  opacity: 0.95;
-  color: #67c23a;
-}
-.alert-theme-warning {
-  border: 1px solid #FFC107;
+  background-color: rgb(112, 228, 116);
+  color: #fff;
 }
 .alert-theme-danger {
-  border: 1px solid #F44336;
-}
-.alert-theme-secondary {
-  border: 1px solid #E91E63;
-}
+  background-color: #FF5252;
+  color: #fff;}

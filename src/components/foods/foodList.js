@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { requestGetData } from '../../config/api';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -17,6 +18,7 @@ class Nav extends React.Component {
     super();
     this.state = {
       foods: [],
+      loading: true,
       categories: [],
       categoryFilter: undefined,
       showSelectMore: false,
@@ -32,7 +34,9 @@ class Nav extends React.Component {
     const self = this;
     requestGetData('getFoodList')
       .then((res) => {
-        self.setState({ foods: res.data });
+        self.setState({ foods: res.data }, () => {
+          self.setState({ loading: false });
+        });
       })
       .catch((e) => {
         console.error(e);
@@ -56,6 +60,7 @@ class Nav extends React.Component {
     this.setState({
       categoryFilter: payload,
     });
+    
   }
 
   deleteAction() {
@@ -104,39 +109,51 @@ class Nav extends React.Component {
           </div>
         </div>
         <div style={styles.table}>
-          <Table multiSelectable={true}>
-            <TableHeader displaySelectAll={this.state.showSelectMore} adjustForCheckbox={this.state.showSelectMore}>
-              <TableRow>
-                <TableHeaderColumn style={tableColStyles.col1}>图片</TableHeaderColumn>
-                <TableHeaderColumn>名称</TableHeaderColumn>
-                <TableHeaderColumn>价格</TableHeaderColumn>
-                <TableHeaderColumn>介绍</TableHeaderColumn>
-                <TableHeaderColumn>分类</TableHeaderColumn>
-                <TableHeaderColumn>是否售罄</TableHeaderColumn>
-                <TableHeaderColumn>赞</TableHeaderColumn>
-                <TableHeaderColumn>操作</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={this.state.showSelectMore} stripedRows={false}>
-              {
-                this.state.foods.map((item, index) =>
-                  <TableRow key={item._id}>
-                    <TableRowColumn style={tableColStyles.col1}>
-                      <img src={item.imageUrl} style={styles.images}/>
-                    </TableRowColumn>
-                    <TableRowColumn>{item.foodName}</TableRowColumn>
-                    <TableRowColumn>{item.price}</TableRowColumn>
-                    <TableRowColumn>{item.description}</TableRowColumn>
-                    <TableRowColumn>{item.category.categoryName}</TableRowColumn>
-                    <TableRowColumn>{item.sellout ? '是' : '否'}</TableRowColumn>
-                    <TableRowColumn>{item.favoriteCount}</TableRowColumn>
-                    <TableRowColumn>
-                      <Link to={`/editfood/${item._id}`} style={styles.checkMore}>查看 / 修改</Link>
-                    </TableRowColumn>
-                  </TableRow>)
-              }
-            </TableBody>
-          </Table>
+          {
+            !this.state.loading ?
+            <Table multiSelectable={true}>
+              <TableHeader displaySelectAll={this.state.showSelectMore} adjustForCheckbox={this.state.showSelectMore}>
+                <TableRow>
+                  <TableHeaderColumn style={tableColStyles.col1}>图片</TableHeaderColumn>
+                  <TableHeaderColumn>名称</TableHeaderColumn>
+                  <TableHeaderColumn>价格</TableHeaderColumn>
+                  <TableHeaderColumn>介绍</TableHeaderColumn>
+                  <TableHeaderColumn>分类</TableHeaderColumn>
+                  <TableHeaderColumn>是否售罄</TableHeaderColumn>
+                  <TableHeaderColumn>赞</TableHeaderColumn>
+                  <TableHeaderColumn>操作</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody displayRowCheckbox={this.state.showSelectMore} stripedRows={false}>
+                {
+                  this.state.foods.map((item, index) =>
+                    <TableRow key={item._id}>
+                      <TableRowColumn style={tableColStyles.col1}>
+                        <img src={item.imageUrl} style={styles.images}/>
+                      </TableRowColumn>
+                      <TableRowColumn>{item.foodName}</TableRowColumn>
+                      <TableRowColumn>{item.price}</TableRowColumn>
+                      <TableRowColumn>{item.description}</TableRowColumn>
+                      <TableRowColumn>{item.category.categoryName}</TableRowColumn>
+                      <TableRowColumn>{item.sellout ? '是' : '否'}</TableRowColumn>
+                      <TableRowColumn>{item.favoriteCount}</TableRowColumn>
+                      <TableRowColumn>
+                        <Link to={`/editfood/${item._id}`} style={styles.checkMore}>查看 / 修改</Link>
+                      </TableRowColumn>
+                    </TableRow>)
+                }
+              </TableBody>
+            </Table>
+            :
+            <RefreshIndicator
+              size={50}
+              top={50}
+              left={540}
+              status="hide"
+              loadingColor="#FF9800"
+              status="loading"
+            />
+          }
         </div>
       </div>
     );
@@ -166,6 +183,8 @@ const styles = {
   },
   table: {
     padding: '14px',
+    minHeight: '140px',
+    position: 'relative',
   },
   images: {
     width: '100%',
