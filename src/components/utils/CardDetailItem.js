@@ -81,8 +81,8 @@ class CardDetailToggle extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      isInputChecked: true,
-      toggleText: '是',
+      isInputChecked: props.truefalse ? true : false,
+      toggleText: props.truefalse ? '是' : '否',
     };
   }
 
@@ -92,6 +92,15 @@ class CardDetailToggle extends React.Component {
       toggleText: isInputChecked ? '是': '否',
     });
     this.props.toggleChange(isInputChecked);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+			this.setState({
+				isInputChecked: nextProps.truefalse ? true : false,
+        toggleText: nextProps.truefalse ? '是': '否',
+			});
+		}
   }
 
   render() {

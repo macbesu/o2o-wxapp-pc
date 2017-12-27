@@ -21,7 +21,7 @@ class Nav extends React.Component {
       loading: true,
       categories: [],
       categoryFilter: undefined,
-      showSelectMore: false,
+      foodNameFilter: undefined,
     }
   }
 
@@ -58,15 +58,42 @@ class Nav extends React.Component {
 
   handleCategoryChange(e, key, payload) {
     this.setState({
+      loading: true,
       categoryFilter: payload,
     });
-    
+    const self = this;
+    requestGetData('getFoodByCategory', payload)
+      .then((res) => {
+        self.setState({ foods: res.data }, () => {
+          self.setState({ loading: false });
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   deleteAction() {
     this.setState({
       showSelectMore: true
     });
+  }
+
+  handleSearch(e, newValue) {
+    this.setState({
+      loading: true,
+      foodNameFilter: newValue,
+    });
+    const self = this;
+    requestGetData('getFoodByName', newValue)
+      .then((res) => {
+        self.setState({ foods: res.data }, () => {
+          self.setState({ loading: false });
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   render() {
@@ -90,7 +117,7 @@ class Nav extends React.Component {
               )
             }
             </SelectField>
-            <TextField hintText="搜索食品" style={styles.textInput} />
+            <TextField hintText="搜索食品" style={styles.textInput} onChange={(e, newValue) => this.handleSearch(e, newValue) } />
           </div>
           <div style={styles.pullRight}>
             <Link to="/editFood">
@@ -112,7 +139,7 @@ class Nav extends React.Component {
           {
             !this.state.loading ?
             <Table multiSelectable={true}>
-              <TableHeader displaySelectAll={this.state.showSelectMore} adjustForCheckbox={this.state.showSelectMore}>
+              <TableHeader displaySelectAll={true} adjustForCheckbox={true}>
                 <TableRow>
                   <TableHeaderColumn style={tableColStyles.col1}>图片</TableHeaderColumn>
                   <TableHeaderColumn>名称</TableHeaderColumn>
@@ -124,7 +151,7 @@ class Nav extends React.Component {
                   <TableHeaderColumn>操作</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
-              <TableBody displayRowCheckbox={this.state.showSelectMore} stripedRows={false}>
+              <TableBody displayRowCheckbox={true} stripedRows={false}>
                 {
                   this.state.foods.map((item, index) =>
                     <TableRow key={item._id}>
@@ -153,6 +180,9 @@ class Nav extends React.Component {
               loadingColor="#FF9800"
               status="loading"
             />
+          }
+          {
+            this.state.foods.length === 0 ? <div style={styles.nothing}> (゜v゜)つ什么都没有...</div> : null
           }
         </div>
       </div>
@@ -194,6 +224,11 @@ const styles = {
     color: '#2196F3',
     cursor: 'pointer',
   },
+  nothing: {
+    color: '#999',
+    textAlign: 'center',
+    marginTop: '30px',
+  }
 };
 
 const tableColStyles = {

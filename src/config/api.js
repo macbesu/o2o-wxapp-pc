@@ -10,6 +10,7 @@ const apiSet = {
   getFoodList: 'foods/',
   getFoodById: 'foods/id=',
   getFoodByCategory: 'foods/category=',
+  getFoodByName: 'foods/name=',
   updateFood: 'foods/',
 
   /**
@@ -45,31 +46,13 @@ export function requestGetData(url, params='') {
       return res;
     })
     .catch((err) => {
-      return false;
+      throw err;
     });
 }
 
 export function requestPatchData(url, params='', data) {
   checkValidUrlAndParams(url, params);
   checkValidReqData(data);
-
-  // return axios({
-  //   method: 'patch',
-  //   headers: {
-  //     'Authorization': token,
-  //     'Content-Type': 'application/x-www-form-urlencoded',
-  //     'xxx': '1'
-  //   },
-  //   url: `${prefix}${apiSet[url]}${params}`,
-  //   data: data,
-  // })
-  //   .then((res) => {
-  //     return res;
-  //   })
-  //   .catch((err) => { 
-  //     return false;
-  //   });
-
   return axios.patch(`${prefix}${apiSet[url]}${params}`, data, {
     headers: {
       Authorization: token,
@@ -79,6 +62,6 @@ export function requestPatchData(url, params='', data) {
       return res;
     })
     .catch((err) => {
-      return false;
+      return err;
     });
 }

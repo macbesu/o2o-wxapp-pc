@@ -3,12 +3,16 @@ import React from 'react';
 import { requestGetData, requestPatchData } from '../../config/api';
 import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
 import Paper from 'material-ui/Paper';
+// import Alert from '../utils/Alert';
+import Snackbar from 'material-ui/Snackbar';
 
 class EditFood extends React.Component {
   constructor(props) {
     super();
     this.state = {
       isAddingStatus: true, // ture是增加，false是修改
+      alertOpen: false,
+      alertMsg: '',
       food: {
         _id: '',
         foodName: '',
@@ -104,6 +108,12 @@ class EditFood extends React.Component {
     this.setState({ food });
   }
 
+  closeAlert() {
+    setTimeout(() => {
+      this.setState({ alertOpen: false, alertMsg: '' });
+    }, 4000);
+  }
+
   handleSave() {
     const self = this;
     const { _id, foodName, description, price, imageUrl, sellout } = this.state.food;
@@ -116,10 +126,15 @@ class EditFood extends React.Component {
     } else {
       requestPatchData('updateFood', self.props.match.params.id, food)
         .then((res) => {
-          
+          if (res.status === 200) {
+            self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { self.closeAlert() });
+          } else {
+            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message;
+            self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
+          }
         })
         .catch((err) => {
-         
+          self.setState({ alertOpen: true, alertMsg: '✘ 服务器开小差了！' }, () => { self.closeAlert() });
         });
     }
     
@@ -179,7 +194,12 @@ class EditFood extends React.Component {
           handleUpdate={() => this.handleSave()}
           handleDelete={() => this.handleDelete()}
         />
-       
+        <Snackbar
+          open={this.state.alertOpen}
+          message={this.state.alertMsg}
+          onRequestClose={this.handleRequestClose}
+          contentStyle={{ textAlign: 'center' }}
+        />
       </div>
     );
   }

@@ -1,14 +1,13 @@
 .alert-box {
-  min-width: 380px;
+  min-width: 280px;
   box-sizing: border-box;
   position: fixed;
-  border-radius: 0 0 2px 2px;
+  border-radius: 10px;
   left: 50%;
-  top: 0;
-  padding: 10px 15px;
+  bottom: 0;
+  padding: 15px;
   font-size: 14px;
-  transform: translateX(-50%);
-  background-color:rgba(255, 255, 255, 0.97);
+  transform: translateX(-50%, -50%);
   transition: opacity .3s,transform .4s;
   overflow: hidden;
   display: flex;
@@ -25,8 +24,9 @@
   display: none;
 }
 .alert-theme-success {
-  background-color: rgb(112, 228, 116);
-  color: #fff;
+  background-color: #f0f9eb;
+  border-color: #e1f3d8;
+  color: #67c23a;
 }
 .alert-theme-danger {
   background-color: #FF5252;
