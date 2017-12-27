@@ -1,4 +1,5 @@
 import React from 'react';
+import Upload from 'rc-upload';
 
 import { requestGetData, requestPostData, requestPatchData } from '../../config/api';
 import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
@@ -9,6 +10,30 @@ import Snackbar from 'material-ui/Snackbar';
 class EditFood extends React.Component {
   constructor(props) {
     super();
+    this.uploaderProps = {
+      action: 'http://localhost:3000/api/v1/files/upload',
+      data: { a: 1, b: 2 },
+      headers: {
+        Authorization: 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTJiZGEyY2M2NjJlMTJjYTgyNGY3MDQiLCJpYXQiOjE1MTMwNTUxODV9.WG5nUZ2otCuBdZEig-XeY9ZdZi9qzoJomb9a5wSCAjo'
+      },
+      multiple: true,
+      beforeUpload(file) {
+        console.log('beforeUpload', file.name);
+      },
+      onStart: (file) => {
+        console.log('onStart', file.name);
+        // this.refs.inner.abort(file);
+      },
+      onSuccess(file) {
+        console.log('onSuccess', file);
+      },
+      onProgress(step, file) {
+        console.log('onProgress', Math.round(step.percent), file.name);
+      },
+      onError(err) {
+        console.log('onError', err);
+      },
+    };
     this.state = {
       isAddingStatus: true, // ture是增加，false是修改
       alertOpen: false,
@@ -18,7 +43,7 @@ class EditFood extends React.Component {
         foodName: '',
         price: '',
         imageUrl: '',
-        sellout: '', 
+        sellout: false, 
         description: '',
         category: {},
         coupon: {},
@@ -211,6 +236,9 @@ class EditFood extends React.Component {
           onRequestClose={this.handleRequestClose}
           contentStyle={{ textAlign: 'center' }}
         />
+        <div>
+          <Upload {...this.uploaderProps} ref="inner"><a>开始上传</a></Upload>
+        </div>
       </div>
     );
   }

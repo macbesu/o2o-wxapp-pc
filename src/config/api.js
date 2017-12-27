@@ -7,10 +7,10 @@ const apiSet = {
   /**
    * foods
    */
-  getFoodList: 'foods/',
-  getFoodById: 'foods/id=',
-  createFood: 'foods/',
-  updateFood: 'foods/',
+  getFoodList: 'foods/', // GET
+  getFoodById: 'foods/id=', // GET
+  createFood: 'foods/', // POST
+  updateFood: 'foods/', // PATCH
 
   /**
    * categories
