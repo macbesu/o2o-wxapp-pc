@@ -21,7 +21,7 @@ class Nav extends React.Component {
       loading: true,
       categories: [],
       categoryFilter: '*',
-      foodNameFilter: undefined,
+      foodNameFilter: '*',
     }
   }
 
@@ -56,39 +56,37 @@ class Nav extends React.Component {
       });
   }
 
-  handleCategoryChange(e, key, payload) {
-    key === 0 ? payload = '*' : null;
-    this.setState({
-      loading: true,
-      categoryFilter: payload,
-    });
-    const self = this;
-    requestGetData('getFoodByCategory', payload)
-      .then((res) => {
-        self.setState({ foods: res.data }, () => {
-          self.setState({ loading: false });
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
-
   deleteAction() {
     this.setState({
       showSelectMore: true
     });
   }
 
-  handleSearch(e, newValue) {
+  handleCategoryChange(e, key, payload) {
+    key === 0 ? payload = '*' : null;
+    this.setState({
+      loading: true,
+      categoryFilter: payload,
+    }, () => {
+      this.search();
+    });
+  }
+
+  handleNameChange(e, newValue) {
     let str = newValue.replace(/(^\s+)|(\s+$)/g, '');
     str === '' ? str = '*' : null;
     this.setState({
       loading: true,
       foodNameFilter: str,
+    }, () => {
+      this.search();
     });
+  }
+
+  search() {
+    const str = `category=${this.state.categoryFilter}&foodName=${this.state.foodNameFilter}`;
     const self = this;
-    requestGetData('getFoodByName', str)
+    requestGetData('getFoodList', str)
       .then((res) => {
         self.setState({ foods: res.data }, () => {
           self.setState({ loading: false });
@@ -125,7 +123,7 @@ class Nav extends React.Component {
               )
             }
             </SelectField>
-            <TextField hintText="搜索食品" style={styles.textInput} onChange={(e, newValue) => this.handleSearch(e, newValue) } />
+            <TextField hintText="搜索食品" style={styles.textInput} onChange={(e, newValue) => this.handleNameChange(e, newValue) } />
           </div>
           <div style={styles.pullRight}>
             <Link to="/editFood">

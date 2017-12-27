@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { requestGetData, requestPatchData } from '../../config/api';
+import { requestGetData, requestPostData, requestPatchData } from '../../config/api';
 import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
 import Paper from 'material-ui/Paper';
 // import Alert from '../utils/Alert';
@@ -122,7 +122,18 @@ class EditFood extends React.Component {
     const food = { _id, foodName, description, price, imageUrl, sellout, category, coupon }; 
 
     if (this.state.isAddingStatus) {
-      console.warn(food);
+      requestPostData('createFood', '', food)
+        .then((res) => {
+          if (res.status === 200) {
+            self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { self.closeAlert() });
+          } else {
+            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message;
+            self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
+          }
+        })
+        .catch((err) => {
+          self.setState({ alertOpen: true, alertMsg: '✘ 服务器开小差了！' }, () => { self.closeAlert() });
+        });
     } else {
       requestPatchData('updateFood', self.props.match.params.id, food)
         .then((res) => {

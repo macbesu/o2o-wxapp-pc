@@ -9,8 +9,7 @@ const apiSet = {
    */
   getFoodList: 'foods/',
   getFoodById: 'foods/id=',
-  getFoodByCategory: 'foods/category=',
-  getFoodByName: 'foods/name=',
+  createFood: 'foods/',
   updateFood: 'foods/',
 
   /**
@@ -24,10 +23,13 @@ const apiSet = {
   getCouponList: 'coupons/',
 };
 
-const checkValidUrlAndParams = (url, params) => {
+const checkValidUrl = (url) => {
   if (!(url && apiSet[url])) {
     return new Promise((resolve, reject) => reject(`requestData方法的url参数\`${url}\`有误`));
-  } 
+  }
+};
+
+const checkValidParams = (params) => {
   if (params && typeof(params) !== 'string') {
     return new Promise((resolve, reject) => reject(`requestData方法的params参数\`${params}\`类型错误，请传入字符串类型数据`));
   }
@@ -40,7 +42,8 @@ const checkValidReqData = (data) => {
 };
 
 export function requestGetData(url, params='') {
-  checkValidUrlAndParams(url, params);
+  checkValidUrl(url);
+  checkValidParams(params);
   return axios.get(`${prefix}${apiSet[url]}${params}`)
     .then((res) => {
       return res;
@@ -50,8 +53,25 @@ export function requestGetData(url, params='') {
     });
 }
 
+export function requestPostData(url, data) {
+  checkValidUrl(url);
+  checkValidReqData(data);
+  return axios.post(`${prefix}${apiSet[url]}`, data, {
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
 export function requestPatchData(url, params='', data) {
-  checkValidUrlAndParams(url, params);
+  checkValidUrl(url);
+  checkValidParams(params);
   checkValidReqData(data);
   return axios.patch(`${prefix}${apiSet[url]}${params}`, data, {
     headers: {
@@ -65,3 +85,4 @@ export function requestPatchData(url, params='', data) {
       return err;
     });
 }
+
