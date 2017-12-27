@@ -20,7 +20,7 @@ class Nav extends React.Component {
       foods: [],
       loading: true,
       categories: [],
-      categoryFilter: undefined,
+      categoryFilter: '*',
       foodNameFilter: undefined,
     }
   }
@@ -57,6 +57,7 @@ class Nav extends React.Component {
   }
 
   handleCategoryChange(e, key, payload) {
+    key === 0 ? payload = '*' : null;
     this.setState({
       loading: true,
       categoryFilter: payload,
@@ -80,12 +81,14 @@ class Nav extends React.Component {
   }
 
   handleSearch(e, newValue) {
+    let str = newValue.replace(/(^\s+)|(\s+$)/g, '');
+    str === '' ? str = '*' : null;
     this.setState({
       loading: true,
-      foodNameFilter: newValue,
+      foodNameFilter: str,
     });
     const self = this;
-    requestGetData('getFoodByName', newValue)
+    requestGetData('getFoodByName', str)
       .then((res) => {
         self.setState({ foods: res.data }, () => {
           self.setState({ loading: false });
@@ -107,6 +110,11 @@ class Nav extends React.Component {
               onChange={(e, key, payload) => this.handleCategoryChange(e, key, payload)}
               style={styles.pullLeft}
             >
+              <MenuItem 
+                key={0} 
+                value='*' 
+                primaryText="(所有)"
+              />
             {
               this.state.categories.map((item, index) => 
                 <MenuItem 
