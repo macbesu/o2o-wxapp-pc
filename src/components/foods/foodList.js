@@ -153,7 +153,6 @@ class Nav extends React.Component {
                   <TableHeaderColumn>介绍</TableHeaderColumn>
                   <TableHeaderColumn>分类</TableHeaderColumn>
                   <TableHeaderColumn>是否售罄</TableHeaderColumn>
-                  <TableHeaderColumn>赞</TableHeaderColumn>
                   <TableHeaderColumn>操作</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
@@ -169,7 +168,6 @@ class Nav extends React.Component {
                       <TableRowColumn>{item.description}</TableRowColumn>
                       <TableRowColumn>{item.category.categoryName}</TableRowColumn>
                       <TableRowColumn>{item.sellout ? '是' : '否'}</TableRowColumn>
-                      <TableRowColumn>{item.favoriteCount}</TableRowColumn>
                       <TableRowColumn>
                         <Link to={`/editfood/${item._id}`} style={styles.checkMore}>查看 / 修改</Link>
                       </TableRowColumn>

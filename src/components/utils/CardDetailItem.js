@@ -1,22 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Upload from 'rc-upload';
 
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
+import { server, prefix, apiSet, token } from '../../config/api';
 
 class CardDetailImage extends React.Component {
   constructor(props) {
     super();
+    const self = this;
+    this.uploaderProps = {
+      action: server + prefix + apiSet['uploadFile'],
+      data: { a: 1, b: 2 },
+      headers: {
+        Authorization: token,
+      },
+      multiple: true,
+      beforeUpload(file) {
+        console.log('beforeUpload', file.name);
+      },
+      onStart: (file) => {
+        console.log('onStart', file.name);
+      },
+      onSuccess(file) {
+        console.log('onSuccess', file);
+        self.afterUpload(file);
+      },
+      onProgress(step, file) {
+        console.log('onProgress', Math.round(step.percent), file.name);
+      },
+      onError(err) {
+        console.log('onError', err);
+        self.setState({ alertOpen: true, alertMsg: '✘ 上传失败！' }, () => { self.closeAlert() });
+      },
+    };
     this.state = {
     };
   }
 
   render() {
     const { label, imageUrl } = this.props;
+    const styles = {
+      upload: {
+        
+      },
+    };
     return (
       <div className="card-detail-item">
         <div className="card-detail-item-label">
@@ -26,6 +59,7 @@ class CardDetailImage extends React.Component {
           {
             imageUrl ? <img src={imageUrl} /> : <div className="card-detail-item-default-img"></div>
           }
+          <Upload {...this.uploaderProps} ref="inner" style={styles.upload}><a>开始上传</a></Upload>
         </div>
       </div>
     );

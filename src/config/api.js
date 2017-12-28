@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const prefix = 'http://localhost:3000/api/v1/';
-const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTJiZGEyY2M2NjJlMTJjYTgyNGY3MDQiLCJpYXQiOjE1MTMwNTUxODV9.WG5nUZ2otCuBdZEig-XeY9ZdZi9qzoJomb9a5wSCAjo';
+export const server = 'http://localhost:3000/';
+export const prefix = 'api/v1/';
+export const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTJiZGEyY2M2NjJlMTJjYTgyNGY3MDQiLCJpYXQiOjE1MTMwNTUxODV9.WG5nUZ2otCuBdZEig-XeY9ZdZi9qzoJomb9a5wSCAjo';
 
-const apiSet = {
+export const apiSet = {
   /**
    * foods
    */
@@ -21,6 +22,11 @@ const apiSet = {
    * coupons
    */
   getCouponList: 'coupons/',
+
+  /**
+   * files
+   */
+  uploadFile: 'files/upload'
 };
 
 const checkValidUrl = (url) => {
@@ -44,7 +50,7 @@ const checkValidReqData = (data) => {
 export function requestGetData(url, params='') {
   checkValidUrl(url);
   checkValidParams(params);
-  return axios.get(`${prefix}${apiSet[url]}${params}`)
+  return axios.get(`${server}${prefix}${apiSet[url]}${params}`)
     .then((res) => {
       return res;
     })
@@ -56,7 +62,7 @@ export function requestGetData(url, params='') {
 export function requestPostData(url, data) {
   checkValidUrl(url);
   checkValidReqData(data);
-  return axios.post(`${prefix}${apiSet[url]}`, data, {
+  return axios.post(`${server}${prefix}${apiSet[url]}`, data, {
     headers: {
       Authorization: token,
     },
@@ -73,7 +79,7 @@ export function requestPatchData(url, params='', data) {
   checkValidUrl(url);
   checkValidParams(params);
   checkValidReqData(data);
-  return axios.patch(`${prefix}${apiSet[url]}${params}`, data, {
+  return axios.patch(`${server}${prefix}${apiSet[url]}${params}`, data, {
     headers: {
       Authorization: token,
     },

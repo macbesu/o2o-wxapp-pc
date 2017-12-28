@@ -1,39 +1,14 @@
 import React from 'react';
-import Upload from 'rc-upload';
 
 import { requestGetData, requestPostData, requestPatchData } from '../../config/api';
 import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
 import Paper from 'material-ui/Paper';
-// import Alert from '../utils/Alert';
 import Snackbar from 'material-ui/Snackbar';
 
 class EditFood extends React.Component {
   constructor(props) {
     super();
-    this.uploaderProps = {
-      action: 'http://localhost:3000/api/v1/files/upload',
-      data: { a: 1, b: 2 },
-      headers: {
-        Authorization: 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTJiZGEyY2M2NjJlMTJjYTgyNGY3MDQiLCJpYXQiOjE1MTMwNTUxODV9.WG5nUZ2otCuBdZEig-XeY9ZdZi9qzoJomb9a5wSCAjo'
-      },
-      multiple: true,
-      beforeUpload(file) {
-        console.log('beforeUpload', file.name);
-      },
-      onStart: (file) => {
-        console.log('onStart', file.name);
-        // this.refs.inner.abort(file);
-      },
-      onSuccess(file) {
-        console.log('onSuccess', file);
-      },
-      onProgress(step, file) {
-        console.log('onProgress', Math.round(step.percent), file.name);
-      },
-      onError(err) {
-        console.log('onError', err);
-      },
-    };
+    
     this.state = {
       isAddingStatus: true, // ture是增加，false是修改
       alertOpen: false,
@@ -138,16 +113,22 @@ class EditFood extends React.Component {
       this.setState({ alertOpen: false, alertMsg: '' });
     }, 4000);
   }
+  
+  afterUpload(file) {
+    const food = Object.assign({}, this.state.food);
+    food.imageUrl = server + file.imageUrl;
+    this.setState({ food });
+  }
 
   handleSave() {
     const self = this;
-    const { _id, foodName, description, price, imageUrl, sellout } = this.state.food;
+    const { foodName, description, price, imageUrl, sellout } = this.state.food;
     const category = this.state.food.category._id || null;
     const coupon = this.state.food.coupon._id || null;
-    const food = { _id, foodName, description, price, imageUrl, sellout, category, coupon }; 
+    const food = { foodName, description, price, imageUrl, sellout, category, coupon }; 
 
     if (this.state.isAddingStatus) {
-      requestPostData('createFood', '', food)
+      requestPostData('createFood', food)
         .then((res) => {
           if (res.status === 200) {
             self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { self.closeAlert() });
@@ -160,6 +141,7 @@ class EditFood extends React.Component {
           self.setState({ alertOpen: true, alertMsg: '✘ 服务器开小差了！' }, () => { self.closeAlert() });
         });
     } else {
+      food._id = this.state.food._id;
       requestPatchData('updateFood', self.props.match.params.id, food)
         .then((res) => {
           if (res.status === 200) {
@@ -236,9 +218,7 @@ class EditFood extends React.Component {
           onRequestClose={this.handleRequestClose}
           contentStyle={{ textAlign: 'center' }}
         />
-        <div>
-          <Upload {...this.uploaderProps} ref="inner"><a>开始上传</a></Upload>
-        </div>
+       
       </div>
     );
   }
