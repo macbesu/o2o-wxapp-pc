@@ -63,17 +63,17 @@ class Nav extends React.Component {
     const self = this;
     const selected = this.state.selected;
     let deleteItems = '';
-    for (let i = 0; i < selected; i ++) {
-      deleteItems += this.state.foods[selected[i]]._id;
+    console.log(selected);
+    for (let i = 0; i < selected.length; i ++) {
+      deleteItems += this.state.foods[selected[i]]._id + (i !== selected.length - 1 ? '&' : '');
     }
-    console.warn(deleteItems);
-    // requestDeleteData('deleteFood', id)
-    //   .then((res) => {
-    //     self.fetchData();
-    //   })
-    //   .catch((e) => {
-    //     console.error(e);
-    //   });
+    requestDeleteData('deleteFood', deleteItems)
+      .then((res) => {
+        self.fetchData();
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   handleCategoryChange(e, key, payload) {
@@ -116,7 +116,6 @@ class Nav extends React.Component {
   }
 
   tableSelect(selectedRows) {
-    console.warn(selectedRows);
     this.setState({ selected: selectedRows });
   }
 

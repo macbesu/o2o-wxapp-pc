@@ -30,9 +30,11 @@ class EditFood extends React.Component {
   }
 
   componentWillMount() {
+    const self = this;
     if (this.props.match.params.id) {
-      this.fetchData();
-      this.setState({ isAddingStatus: false });
+      this.setState({ isAddingStatus: false }, () => {
+        this.fetchData();
+      });
     }
     this.getCategoryList();
     this.getCouponList();
@@ -104,8 +106,13 @@ class EditFood extends React.Component {
 
   changeCoupon(obj) {
     const food = Object.assign({}, this.state.food);
-    food.coupon._id = obj._id;
-    food.coupon.remark = obj.remark;
+    if (obj._id !== '*' ) {
+      food.coupon = {};
+      food.coupon._id = obj._id;
+      food.coupon.remark = obj.remark;
+    } else {
+      food.coupon = null;
+    }
     this.setState({ food });
   }
 
@@ -125,7 +132,7 @@ class EditFood extends React.Component {
     const self = this;
     const { foodName, description, price, imageUrl, sellout } = this.state.food;
     const category = this.state.food.category._id || null;
-    const coupon = this.state.food.coupon._id || null;
+    const coupon = this.state.food.coupon && this.state.food.coupon._id || null;
     const food = { foodName, description, price, imageUrl, sellout, category, coupon }; 
 
     if (this.state.isAddingStatus) {
@@ -207,6 +214,7 @@ class EditFood extends React.Component {
           selected={this.state.food.coupon} 
           unification={'remark'} 
           dataList={this.state.couponList} 
+          appendItem={{value: '*', primaryText: '(无)'}}
           selectChange={val => this.changeCoupon(val)}
         />
         <CardDetailTools 
@@ -219,7 +227,6 @@ class EditFood extends React.Component {
           onRequestClose={this.handleRequestClose}
           contentStyle={{ textAlign: 'center' }}
         />
-       
       </div>
     );
   }

@@ -178,7 +178,7 @@ class CardDetailSelect extends React.Component {
   }
 
   render() {
-    const { label, unification } = this.props;
+    const { label, unification, appendItem } = this.props;
     return (
       <div className="card-detail-item">
         <div className="card-detail-item-label">
@@ -186,18 +186,17 @@ class CardDetailSelect extends React.Component {
         </div>
         <div className="card-detail-item-select">
           <SelectField
-            value={this.state.selected._id}
+            value={this.state.selected === null ? '*': this.state.selected._id }
             style={{ minWidth: '300px' }}
             floatingLabelText={`请选择${label}`}
             onChange={(e, key, payload) => this.handleSelect(e, key, payload)}
           >
             {
-              this.state.dataList.map(item => (
-                <MenuItem 
-                  key={item._id} 
-                  value={item._id} 
-                  primaryText={item[unification]} 
-                />
+              appendItem ? <MenuItem key={appendItem.value} value={appendItem.value} primaryText={appendItem.primaryText} /> : null
+            }            
+            {
+              this.state.dataList.map( item => (
+                <MenuItem key={item._id} value={item._id} primaryText={item[unification]} /> 
               ))
             }
           </SelectField>
