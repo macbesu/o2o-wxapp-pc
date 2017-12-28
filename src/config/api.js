@@ -9,9 +9,10 @@ export const apiSet = {
    * foods
    */
   getFoodList: 'foods/', // GET
-  getFoodById: 'foods/id=', // GET
+  getFoodById: 'foods/', // GET
   createFood: 'foods/', // POST
   updateFood: 'foods/', // PATCH
+  deleteFood: 'foods/', // DELETE
 
   /**
    * categories
@@ -89,6 +90,22 @@ export function requestPatchData(url, params='', data) {
     })
     .catch((err) => {
       return err;
+    });
+}
+
+export function requestDeleteData(url, params='') {
+  checkValidUrl(url);
+  checkValidParams(params);
+  return axios.delete(`${server}${prefix}${apiSet[url]}${params}`, {
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      throw err;
     });
 }
 

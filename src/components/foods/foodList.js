@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { requestGetData } from '../../config/api';
+import { requestGetData, requestDeleteData } from '../../config/api';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
@@ -22,7 +22,9 @@ class Nav extends React.Component {
       categories: [],
       categoryFilter: '*',
       foodNameFilter: '*',
-    }
+      selected: [],
+    };
+    this.isSelected = (index) => this.state.selected.indexOf(index) !== -1;
   }
 
   componentWillMount() {
@@ -32,6 +34,7 @@ class Nav extends React.Component {
 
   fetchData() {
     const self = this;
+    self.setState({ loading: true });
     requestGetData('getFoodList')
       .then((res) => {
         self.setState({ foods: res.data }, () => {
@@ -57,9 +60,20 @@ class Nav extends React.Component {
   }
 
   deleteAction() {
-    this.setState({
-      showSelectMore: true
-    });
+    const self = this;
+    const selected = this.state.selected;
+    let deleteItems = '';
+    for (let i = 0; i < selected; i ++) {
+      deleteItems += this.state.foods[selected[i]]._id;
+    }
+    console.warn(deleteItems);
+    // requestDeleteData('deleteFood', id)
+    //   .then((res) => {
+    //     self.fetchData();
+    //   })
+    //   .catch((e) => {
+    //     console.error(e);
+    //   });
   }
 
   handleCategoryChange(e, key, payload) {
@@ -95,6 +109,15 @@ class Nav extends React.Component {
       .catch((e) => {
         console.error(e);
       });
+  }
+
+  isSelected(index) {
+    this.state.selected.indexOf(index) !== -1;
+  }
+
+  tableSelect(selectedRows) {
+    console.warn(selectedRows);
+    this.setState({ selected: selectedRows });
   }
 
   render() {
@@ -144,7 +167,7 @@ class Nav extends React.Component {
         <div style={styles.table}>
           {
             !this.state.loading ?
-            <Table multiSelectable={true}>
+            <Table multiSelectable={true} onRowSelection={(selectedRows) => this.tableSelect(selectedRows)}>
               <TableHeader displaySelectAll={true} adjustForCheckbox={true}>
                 <TableRow>
                   <TableHeaderColumn style={tableColStyles.col1}>图片</TableHeaderColumn>
@@ -156,10 +179,10 @@ class Nav extends React.Component {
                   <TableHeaderColumn>操作</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
-              <TableBody displayRowCheckbox={true} stripedRows={false}>
+              <TableBody displayRowCheckbox={true} stripedRows={false} deselectOnClickaway={false}>
                 {
                   this.state.foods.map((item, index) =>
-                    <TableRow key={item._id}>
+                    <TableRow key={item._id} selected={this.isSelected(index)}>
                       <TableRowColumn style={tableColStyles.col1}>
                         <img src={item.imageUrl} style={styles.images}/>
                       </TableRowColumn>

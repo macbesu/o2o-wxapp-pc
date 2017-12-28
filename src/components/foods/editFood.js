@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { requestGetData, requestPostData, requestPatchData } from '../../config/api';
-import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
 import Paper from 'material-ui/Paper';
 import Snackbar from 'material-ui/Snackbar';
+import { requestGetData, requestPostData, requestPatchData } from '../../config/api';
+import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
+import { server } from '../../config/api';
 
 class EditFood extends React.Component {
   constructor(props) {
@@ -130,7 +131,7 @@ class EditFood extends React.Component {
     if (this.state.isAddingStatus) {
       requestPostData('createFood', food)
         .then((res) => {
-          if (res.status === 200) {
+          if (res.status === 201) {
             self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { self.closeAlert() });
           } else {
             const errMsg = JSON.parse(JSON.stringify(res)).response.data.message;
@@ -165,7 +166,7 @@ class EditFood extends React.Component {
   render() {
     return (
       <div className="card-detail-box">
-        <CardDetailImage label={'图片'} imageUrl={this.state.food.imageUrl} />
+        <CardDetailImage label={'图片'} imageUrl={this.state.food.imageUrl}  upload={file => this.afterUpload(file)}/>
         {
           !this.state.isAddingStatus ? 
           <CardDetailText 

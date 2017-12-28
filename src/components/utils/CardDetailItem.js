@@ -29,7 +29,7 @@ class CardDetailImage extends React.Component {
       },
       onSuccess(file) {
         console.log('onSuccess', file);
-        self.afterUpload(file);
+        self.props.upload(file);
       },
       onProgress(step, file) {
         console.log('onProgress', Math.round(step.percent), file.name);
@@ -45,22 +45,18 @@ class CardDetailImage extends React.Component {
 
   render() {
     const { label, imageUrl } = this.props;
-    const styles = {
-      upload: {
-        
-      },
-    };
     return (
       <div className="card-detail-item">
         <div className="card-detail-item-label">
           {label}：
         </div>
-        <div className="card-detail-item-image">
-          {
-            imageUrl ? <img src={imageUrl} /> : <div className="card-detail-item-default-img"></div>
-          }
-          <Upload {...this.uploaderProps} ref="inner" style={styles.upload}><a>开始上传</a></Upload>
-        </div>
+        <Upload {...this.uploaderProps} ref="inner">
+          <div className="card-detail-item-image">
+            {
+              imageUrl ? <img src={imageUrl} /> : <div className="card-detail-item-default-img"></div>
+            }
+          </div>
+        </Upload>
       </div>
     );
   }
