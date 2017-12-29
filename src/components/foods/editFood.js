@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { requestGetData, requestPostData, requestPatchData, requestDeleteData } from '../../config/api';
+import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
 import Paper from 'material-ui/Paper';
 import Snackbar from 'material-ui/Snackbar';
-import { requestGetData, requestPostData, requestPatchData } from '../../config/api';
-import { CardDetailImage, CardDetailText, CardDetailToggle, CardDetailSelect, CardDetailTools } from '../utils/CardDetailItem';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import { server } from '../../config/api';
 
 class EditFood extends React.Component {
@@ -11,6 +13,7 @@ class EditFood extends React.Component {
     super();
     
     this.state = {
+      openDialog: false,
       isAddingStatus: true, // ture是增加，false是修改
       alertOpen: false,
       alertMsg: '',
@@ -99,6 +102,7 @@ class EditFood extends React.Component {
 
   changeCategory(obj) {
     const food = Object.assign({}, this.state.food);
+    food.category = {};
     food.category._id = obj._id;
     food.category.categoryName = obj.categoryName;
     this.setState({ food });
@@ -128,6 +132,10 @@ class EditFood extends React.Component {
     this.setState({ food });
   }
 
+  deleteAction() {
+    this.setState({ openDialog: true });
+  }
+
   handleSave() {
     const self = this;
     const { foodName, description, price, imageUrl, sellout } = this.state.food;
@@ -140,7 +148,7 @@ class EditFood extends React.Component {
         .then((res) => {
           if (res.status === 201) {
             self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { 
-              self.props.history.push('/foodlist');
+              self.props.history.replace('/foodlist');
               self.closeAlert(); 
             });
           } else {
@@ -157,7 +165,7 @@ class EditFood extends React.Component {
         .then((res) => {
           if (res.status === 200) {
             self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { 
-              self.props.history.push('/foodlist');
+              self.props.history.replace('/foodlist');
               self.closeAlert(); 
             });
           } else {
@@ -172,11 +180,33 @@ class EditFood extends React.Component {
     
   }
 
+  handleOpenDialog() {
+    if (this.state.selected.length > 0) {
+      this.handleDelete();
+    }
+    this.setState({ openDialog: false });
+  }
+  
+  handleCloseDialog() {
+    this.setState({ openDialog: false });
+  }
+
   handleDelete() {
-   
+    const self = this;
+    requestDeleteData('foods', self.props.match.params.id)
+      .then((res) => {
+        self.props.history.replace('/foodlist');
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   render() {
+    const actions = [
+      <FlatButton label="确认" primary={false}  onClick={() => this.handleOpenDialog()} />,
+      <FlatButton label="取消" primary={true} keyboardFocused={true} onClick={() => this.handleCloseDialog()} />,
+    ];
     return (
       <div className="card-detail-box">
         <CardDetailImage label={'图片'} imageUrl={this.state.food.imageUrl}  upload={file => this.afterUpload(file)}/>
@@ -194,7 +224,7 @@ class EditFood extends React.Component {
           toggleChange={val => this.changeSellout(val)}
         />
         <CardDetailText 
-          label={'名字'} 
+          label={'名称'} 
           text={this.state.food.foodName} 
           textChange={val => this.changeFoodName(val) } 
         />
@@ -224,6 +254,7 @@ class EditFood extends React.Component {
           selectChange={val => this.changeCoupon(val)}
         />
         <CardDetailTools 
+          historyBack="/foodlist"
           handleUpdate={() => this.handleSave()}
           handleDelete={() => this.handleDelete()}
         />
@@ -233,6 +264,9 @@ class EditFood extends React.Component {
           onRequestClose={this.handleRequestClose}
           contentStyle={{ textAlign: 'center' }}
         />
+        <Dialog title="警告" actions={actions} modal={false} open={this.state.openDialog}>
+          是否确定删除？
+        </Dialog>
       </div>
     );
   }

@@ -147,8 +147,8 @@ class Nav extends React.Component {
 
   render() {
     const actions = [
-      <FlatButton label="取消" primary={false} onClick={() => this.handleCloseDialog()} />,
-      <FlatButton label="确认" primary={true}  onClick={() => this.handleOpenDialog()} />,
+      <FlatButton label="确认" primary={false}  onClick={() => this.handleOpenDialog()} />,
+      <FlatButton label="取消" primary={true} keyboardFocused={true} onClick={() => this.handleCloseDialog()} />,
     ];
     return (
       <div>
@@ -165,20 +165,20 @@ class Nav extends React.Component {
                 value='*' 
                 primaryText="(所有)"
               />
-            {
-              this.state.categories.map((item, index) => 
-                <MenuItem 
-                  key={item._id} 
-                  value={item._id} 
-                  primaryText={item.categoryName}
-                />
-              )
-            }
+              {
+                this.state.categories.map((item, index) => 
+                  <MenuItem 
+                    key={item._id} 
+                    value={item._id} 
+                    primaryText={item.categoryName}
+                  />
+                )
+              }
             </SelectField>
             <TextField hintText="搜索食品" className="my-tools-textinput" onChange={(e, newValue) => this.handleNameChange(e, newValue) } />
           </div>
           <div className="pullRight">
-            <Link to="/editfood">
+            <Link to="/editcoupon">
               <RaisedButton label="增加" 
                 className="my-tools-btns"
                 labelPosition="before" 
@@ -219,9 +219,9 @@ class Nav extends React.Component {
                       <TableRowColumn>{item.foodName}</TableRowColumn>
                       <TableRowColumn>{item.price}</TableRowColumn>
                       <TableRowColumn>{item.description}</TableRowColumn>
-                      <TableRowColumn>{item.category.categoryName}</TableRowColumn>
+                      <TableRowColumn>{item.category ? item.category.categoryName : '(无)'}</TableRowColumn>
                       <TableRowColumn>{item.sellout ? '是' : '否'}</TableRowColumn>
-                      <TableRowColumn>{item.coupon === null ? '(无)' : item.coupon.remark}</TableRowColumn>
+                      <TableRowColumn>{item.coupon ? item.coupon.remark : '(无)'}</TableRowColumn>
                       <TableRowColumn style={tableColStyles.col2}>
                         <Link to={`/editfood/${item._id}`} className="my-table-checkMore">查看 / 修改</Link>
                       </TableRowColumn>

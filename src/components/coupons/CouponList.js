@@ -5,6 +5,8 @@ import { requestGetData, requestDeleteData } from '../../config/api';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Dialog from 'material-ui/Dialog';
 import Paper from 'material-ui/Paper';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -13,15 +15,16 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 import DeleteIcon from 'material-ui/svg-icons/content/clear';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
-class CategoryList extends React.Component {
+class CouponList extends React.Component {
   constructor(props) {
     super();
     this.state = {
       openDialog: false,
-      categories: [],
+      coupons: [],
+      filterCoupons: [], 
       loading: true,
       selected: [],
-      categoryNameFilter: '',
+      couponType: '*',
     };
     this.isSelected = (index) => this.state.selected.indexOf(index) !== -1;
   }
@@ -33,9 +36,10 @@ class CategoryList extends React.Component {
   fetchData() {
     const self = this;
     self.setState({ loading: true });
-    requestGetData('categories')
+    requestGetData('coupons')
       .then((res) => {
-        self.setState({ categories: res.data }, () => {
+        self.setState({ coupons: res.data }, () => {
+          self.setState({ filterCoupons: res.data });
           self.setState({ loading: false });
         });
       })
@@ -48,58 +52,12 @@ class CategoryList extends React.Component {
     this.setState({ selected: selectedRows });
   }
 
-  handleNameChange(e, newValue) {
-    let str = newValue.replace(/(^\s+)|(\s+$)/g, '');
-    str === '' ? str = '*' : null;
-    this.setState({
-      loading: true,
-      categoryNameFilter: str,
-    }, () => {
-      this.search();
-    });
-  }
-
-  search() {
-    const str = `categoryName=${this.state.categoryNameFilter}`;
-    const self = this;
-    requestGetData('categories', str)
-      .then((res) => {
-        self.setState({ categories: res.data }, () => {
-          self.setState({ loading: false });
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
-
   deleteAction() {
     this.setState({ openDialog: true });
   }
 
   handleDelete() {
-    const self = this;
-    const selected = this.state.selected;
-    if (selected.length > 0 || selected === 'all') {
-      let deleteItems = '';      
-      if (selected === 'all') {
-        const categories = self.state.categories;
-        for (let i = 0; i < categories.length; i ++) {
-          deleteItems += categories[i]._id + (i !== categories.length - 1 ? '&' : '');
-        }
-      } else {
-        for (let i = 0; i < selected.length; i ++) {
-          deleteItems += this.state.categories[selected[i]]._id + (i !== selected.length - 1 ? '&' : '');
-        }
-      }
-      requestDeleteData('categories', deleteItems)
-        .then((res) => {
-          self.fetchData();
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    }
+
   }
 
   handleOpenDialog() {
@@ -113,6 +71,22 @@ class CategoryList extends React.Component {
     this.setState({ openDialog: false });
   }
 
+  selectCouponType(e, key, payload) {
+    const coupons = this.state.coupons;
+    this.setState({ couponType: payload });
+    if(payload === '*') {
+      this.setState({ filterCoupons: coupons });
+    } else {
+      let filterArray = [];
+      coupons.forEach((item, index) => {
+        if (item.couponType.toString() === payload) {
+          filterArray.push(item);
+        }
+      });
+      this.setState({ filterCoupons: filterArray });
+    }
+  }
+
   render() {
     const actions = [
       <FlatButton label="确认" primary={false}  onClick={() => this.handleOpenDialog()} />,
@@ -122,7 +96,16 @@ class CategoryList extends React.Component {
       <div>
         <div className="clearfix my-tools">
           <div className="pullLeft">
-            <TextField hintText="搜索分类" className="my-tools-textinput" onChange={(e, newValue) => this.handleNameChange(e, newValue) } />
+            <SelectField
+              floatingLabelText="优惠券类型"
+              value={this.state.couponType}
+              onChange={(e, key, payload) => this.selectCouponType(e, key, payload)}
+              className="pullLeft my-tools-select"
+            >
+              <MenuItem value='*'  primaryText="(所有)" />
+              <MenuItem value='0'  primaryText=" 打折 " />
+              <MenuItem value='1'  primaryText=" 满减 " />
+            </SelectField>
           </div>
           <div className="pullRight">
             <Link to="/editcategory">
@@ -152,11 +135,11 @@ class CategoryList extends React.Component {
               </TableHeader>
               <TableBody displayRowCheckbox={true} stripedRows={false} deselectOnClickaway={false}>
                 {
-                  this.state.categories.map((item, index) =>
+                  this.state.filterCoupons.map((item, index) =>
                     <TableRow key={item._id} selected={this.isSelected(index)}>
-                      <TableRowColumn>{item.categoryName}</TableRowColumn>
+                      <TableRowColumn>{item.remark}</TableRowColumn>
                       <TableRowColumn>
-                        <Link to={`/editcategory/${item._id}`} className="my-table-checkMore">查看 / 修改</Link>
+                        <Link to={`/editcoupon/${item._id}`} className="my-table-checkMore">查看 / 修改</Link>
                       </TableRowColumn>
                     </TableRow>)
                 }
@@ -166,15 +149,15 @@ class CategoryList extends React.Component {
             <RefreshIndicator size={50} top={30} left={36} status="hide" status="loading" />
           }
           {
-            this.state.categories.length === 0 ? <div className="my-table-nothing"> (゜v゜)つ什么都没有...</div> : null
+            this.state.coupons.length === 0 ? <div className="my-table-nothing"> (゜v゜)つ什么都没有...</div> : null
           }
         </div>
         <Dialog title="警告" actions={actions} modal={false} open={this.state.openDialog}>
-          如果删除该分类，其下分类的所有菜单都将被删除！是否确定删除？
+          是否确定删除？
         </Dialog>
       </div>
     );
   }
 }
 
-export default CategoryList;
+export default CouponList;

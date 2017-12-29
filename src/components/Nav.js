@@ -40,13 +40,13 @@ class Nav extends React.Component {
             <NavLink to={`/categorylist`} style={styles.navlink} activeStyle={styles.activeStyle}>
               <MenuItem primaryText="分类" rightIcon={<CategoryIcon />} />
             </NavLink>
-            <NavLink to={`/1`} style={styles.navlink} activeStyle={styles.activeStyle}>
+            <NavLink to={`/couponlist1`} style={styles.navlink} activeStyle={styles.activeStyle}>
               <MenuItem primaryText="订单" rightIcon={<OrdersIcon />} />
             </NavLink>
-            <NavLink to={`/2`} style={styles.navlink} activeStyle={styles.activeStyle}>
+            <NavLink to={`/couponlist`} style={styles.navlink} activeStyle={styles.activeStyle}>
               <MenuItem primaryText="优惠券" rightIcon={<CouponIcon />} />
             </NavLink>
-            <NavLink to={`/3`} style={styles.navlink} activeStyle={styles.activeStyle}>
+            <NavLink to={`/couponlist1`} style={styles.navlink} activeStyle={styles.activeStyle}>
               <MenuItem primaryText="用户" rightIcon={<UserIcon />} />
             </NavLink>
           </Menu>

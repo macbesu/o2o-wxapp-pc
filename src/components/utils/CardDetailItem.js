@@ -220,13 +220,14 @@ class CardDetailTools extends React.Component {
         margin: '0 16px 0 0',
       }
     }
+    const { historyBack } = this.props;
     return (
       <div className="card-detail-item">
         <div className="card-detail-item-label">
           操作：
         </div>
         <div className="card-detail-item-tools">
-          <Link to="/foodList">
+          <Link to={`${historyBack}`}>
             <RaisedButton label="返回" style={styles.btn} />
           </Link>
           <RaisedButton 
