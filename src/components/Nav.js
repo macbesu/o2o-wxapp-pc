@@ -37,7 +37,7 @@ class Nav extends React.Component {
             <NavLink to={`/foodlist`} style={styles.navlink} activeStyle={styles.activeStyle}>
               <MenuItem primaryText="菜单" rightIcon={<FoodIcon/>} />
             </NavLink>
-            <NavLink to={`/editfood/2382193810`} style={styles.navlink} activeStyle={styles.activeStyle}>
+            <NavLink to={`/categorylist`} style={styles.navlink} activeStyle={styles.activeStyle}>
               <MenuItem primaryText="分类" rightIcon={<CategoryIcon />} />
             </NavLink>
             <NavLink to={`/1`} style={styles.navlink} activeStyle={styles.activeStyle}>

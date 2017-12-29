@@ -69,17 +69,26 @@ class Nav extends React.Component {
   handleDelete() {
     const self = this;
     const selected = this.state.selected;
-    let deleteItems = '';
-    for (let i = 0; i < selected.length; i ++) {
-      deleteItems += this.state.foods[selected[i]]._id + (i !== selected.length - 1 ? '&' : '');
+    if (selected.length > 0 || selected === 'all') {
+      let deleteItems = '';      
+      if (selected === 'all') {
+        const foods = self.state.foods;
+        for (let i = 0; i < foods.length; i ++) {
+          deleteItems += foods[i]._id + (i !== foods.length - 1 ? '&' : '');
+        }
+      } else {
+        for (let i = 0; i < selected.length; i ++) {
+          deleteItems += this.state.foods[selected[i]]._id + (i !== selected.length - 1 ? '&' : '');
+        }
+      }
+      requestDeleteData('foods', deleteItems)
+        .then((res) => {
+          self.fetchData();
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
-    requestDeleteData('foods', deleteItems)
-      .then((res) => {
-        self.fetchData();
-      })
-      .catch((e) => {
-        console.error(e);
-      });
   }
 
   handleCategoryChange(e, key, payload) {
@@ -143,13 +152,13 @@ class Nav extends React.Component {
     ];
     return (
       <div>
-        <div className="clearfix" style={styles.tools}>
-          <div style={styles.pullLeft}>
+        <div className="clearfix my-tools">
+          <div className="pullLeft">
             <SelectField
               floatingLabelText="按分类查找"
               value={this.state.categoryFilter}
               onChange={(e, key, payload) => this.handleCategoryChange(e, key, payload)}
-              style={styles.pullLeft}
+              className="pullLeft my-tools-select"
             >
               <MenuItem 
                 key={0} 
@@ -166,25 +175,25 @@ class Nav extends React.Component {
               )
             }
             </SelectField>
-            <TextField hintText="搜索食品" style={styles.textInput} onChange={(e, newValue) => this.handleNameChange(e, newValue) } />
+            <TextField hintText="搜索食品" className="my-tools-textinput" onChange={(e, newValue) => this.handleNameChange(e, newValue) } />
           </div>
-          <div style={styles.pullRight}>
-            <Link to="/editFood">
+          <div className="pullRight">
+            <Link to="/editfood">
               <RaisedButton label="增加" 
-                style={styles.btns}
+                className="my-tools-btns"
                 labelPosition="before" 
                 icon={<AddIcon style={{width: '21px', height: '21px', marginTop: '-1px'}}/>}
               />
             </Link> 
             <RaisedButton label="删除" 
-              style={styles.btns} 
+              className="my-my-tools-btns"
               labelPosition="before" 
               icon={<DeleteIcon style={{width: '21px', height: '21px', marginTop: '-1px'}}/>} 
               onClick={() => this.deleteAction()}
             />
           </div>
         </div>
-        <div style={styles.table}>
+        <div className="my-table">
           {
             !this.state.loading ?
             <Table multiSelectable={true} onRowSelection={(selectedRows) => this.tableSelect(selectedRows)}>
@@ -196,7 +205,8 @@ class Nav extends React.Component {
                   <TableHeaderColumn>介绍</TableHeaderColumn>
                   <TableHeaderColumn>分类</TableHeaderColumn>
                   <TableHeaderColumn>是否售罄</TableHeaderColumn>
-                  <TableHeaderColumn>操作</TableHeaderColumn>
+                  <TableHeaderColumn>优惠券</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col2}>操作</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody displayRowCheckbox={true} stripedRows={false} deselectOnClickaway={false}>
@@ -211,25 +221,19 @@ class Nav extends React.Component {
                       <TableRowColumn>{item.description}</TableRowColumn>
                       <TableRowColumn>{item.category.categoryName}</TableRowColumn>
                       <TableRowColumn>{item.sellout ? '是' : '否'}</TableRowColumn>
-                      <TableRowColumn>
-                        <Link to={`/editfood/${item._id}`} style={styles.checkMore}>查看 / 修改</Link>
+                      <TableRowColumn>{item.coupon === null ? '(无)' : item.coupon.remark}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col2}>
+                        <Link to={`/editfood/${item._id}`} className="my-table-checkMore">查看 / 修改</Link>
                       </TableRowColumn>
                     </TableRow>)
                 }
               </TableBody>
             </Table>
             :
-            <RefreshIndicator
-              size={50}
-              top={50}
-              left={540}
-              status="hide"
-              loadingColor="#FF9800"
-              status="loading"
-            />
+            <RefreshIndicator size={50} top={30} left={36} status="hide" status="loading" />
           }
           {
-            this.state.foods.length === 0 ? <div style={styles.nothing}> (゜v゜)つ什么都没有...</div> : null
+            this.state.foods.length === 0 ? <div className="my-table-nothing"> (゜v゜)つ什么都没有...</div> : null
           }
         </div>
         <Dialog title="警告" actions={actions} modal={false} open={this.state.openDialog}>
@@ -242,43 +246,10 @@ class Nav extends React.Component {
 }
 
 const styles = {
-  tools: {
-    height: '60px',
-    margin: '0 0 10px 0',
-    padding: '0 36px',
-  },
-  btns: {
-    margin: '25px 0 0 12px',
-  },
-  textInput: {
-    padding: '24px 0 0 0',
-    margin: '0 0 0 68px',
-    fontSize: '14px',
-  },
-  pullLeft: {
-    float: 'left',
-  },
-  pullRight: {
-    float: 'right',
-  },
-  table: {
-    padding: '14px',
-    minHeight: '140px',
-    position: 'relative',
-  },
   images: {
     width: '100%',
     height: '40px',
   },
-  checkMore: {
-    color: '#2196F3',
-    cursor: 'pointer',
-  },
-  nothing: {
-    color: '#999',
-    textAlign: 'center',
-    marginTop: '30px',
-  }
 };
 
 const tableColStyles = {
@@ -287,7 +258,8 @@ const tableColStyles = {
     textAlign: 'center',
   },
   col2: {
-
+    width: '68px',
+    textAlign: 'center',
   },
 };
 

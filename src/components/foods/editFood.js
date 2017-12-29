@@ -139,7 +139,10 @@ class EditFood extends React.Component {
       requestPostData('foods', food)
         .then((res) => {
           if (res.status === 201) {
-            self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { self.closeAlert() });
+            self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { 
+              self.props.history.push('/foodlist');
+              self.closeAlert(); 
+            });
           } else {
             const errMsg = JSON.parse(JSON.stringify(res)).response.data.message;
             self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
@@ -153,7 +156,10 @@ class EditFood extends React.Component {
       requestPatchData('foods', self.props.match.params.id, food)
         .then((res) => {
           if (res.status === 200) {
-            self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { self.closeAlert() });
+            self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { 
+              self.props.history.push('/foodlist');
+              self.closeAlert(); 
+            });
           } else {
             const errMsg = JSON.parse(JSON.stringify(res)).response.data.message;
             self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
