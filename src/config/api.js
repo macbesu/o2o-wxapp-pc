@@ -8,21 +8,24 @@ export const apiSet = {
   /**
    * foods
    */
-  getFoodList: 'foods/', // GET
-  getFoodById: 'foods/', // GET
-  createFood: 'foods/', // POST
-  updateFood: 'foods/', // PATCH
-  deleteFood: 'foods/', // DELETE
+  foods: 'foods',
+  // getFoodList: 'foods', // GET
+  // getFoodById: 'foods', // GET
+  // createFood: 'foods', // POST
+  // updateFood: 'foods', // PATCH
+  // deleteFood: 'foods', // DELETE
 
   /**
    * categories
    */
-  getCategorylist: 'categories/',
+  categories: 'categories',
+  // getCategorylist: 'categories/',
 
   /**
    * coupons
    */
-  getCouponList: 'coupons/',
+  coupons: 'coupons',
+  // getCouponList: 'coupons/',
 
   /**
    * files
@@ -51,7 +54,7 @@ const checkValidReqData = (data) => {
 export function requestGetData(url, params='') {
   checkValidUrl(url);
   checkValidParams(params);
-  return axios.get(`${server}${prefix}${apiSet[url]}${params}`)
+  return axios.get(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`)
     .then((res) => {
       return res;
     })
@@ -80,7 +83,7 @@ export function requestPatchData(url, params='', data) {
   checkValidUrl(url);
   checkValidParams(params);
   checkValidReqData(data);
-  return axios.patch(`${server}${prefix}${apiSet[url]}${params}`, data, {
+  return axios.patch(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`, data, {
     headers: {
       Authorization: token,
     },
@@ -96,7 +99,7 @@ export function requestPatchData(url, params='', data) {
 export function requestDeleteData(url, params='') {
   checkValidUrl(url);
   checkValidParams(params);
-  return axios.delete(`${server}${prefix}${apiSet[url]}${params}`, {
+  return axios.delete(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`, {
     headers: {
       Authorization: token,
     },

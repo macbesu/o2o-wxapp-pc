@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { requestGetData, requestDeleteData } from '../../config/api';
+import Dialog from 'material-ui/Dialog';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import DeleteIcon from 'material-ui/svg-icons/content/clear';
@@ -17,6 +19,7 @@ class Nav extends React.Component {
   constructor(props) {
     super();
     this.state = {
+      openDialog: false,
       foods: [],
       loading: true,
       categories: [],
@@ -35,7 +38,7 @@ class Nav extends React.Component {
   fetchData() {
     const self = this;
     self.setState({ loading: true });
-    requestGetData('getFoodList')
+    requestGetData('foods')
       .then((res) => {
         self.setState({ foods: res.data }, () => {
           self.setState({ loading: false });
@@ -48,7 +51,7 @@ class Nav extends React.Component {
 
   getCategories() {
     const self = this;
-    requestGetData('getCategorylist')
+    requestGetData('categories')
       .then((res) => {
         self.setState({
           categories: res.data
@@ -60,14 +63,17 @@ class Nav extends React.Component {
   }
 
   deleteAction() {
+    this.setState({ openDialog: true });
+  }
+
+  handleDelete() {
     const self = this;
     const selected = this.state.selected;
     let deleteItems = '';
-    console.log(selected);
     for (let i = 0; i < selected.length; i ++) {
       deleteItems += this.state.foods[selected[i]]._id + (i !== selected.length - 1 ? '&' : '');
     }
-    requestDeleteData('deleteFood', deleteItems)
+    requestDeleteData('foods', deleteItems)
       .then((res) => {
         self.fetchData();
       })
@@ -100,7 +106,7 @@ class Nav extends React.Component {
   search() {
     const str = `category=${this.state.categoryFilter}&foodName=${this.state.foodNameFilter}`;
     const self = this;
-    requestGetData('getFoodList', str)
+    requestGetData('foods', str)
       .then((res) => {
         self.setState({ foods: res.data }, () => {
           self.setState({ loading: false });
@@ -111,6 +117,17 @@ class Nav extends React.Component {
       });
   }
 
+  handleOpenDialog() {
+    if (this.state.selected.length > 0) {
+      this.handleDelete();
+    }
+    this.setState({ openDialog: false });
+  }
+  
+  handleCloseDialog() {
+    this.setState({ openDialog: false });
+  }
+  
   isSelected(index) {
     this.state.selected.indexOf(index) !== -1;
   }
@@ -120,6 +137,10 @@ class Nav extends React.Component {
   }
 
   render() {
+    const actions = [
+      <FlatButton label="取消" primary={false} onClick={() => this.handleCloseDialog()} />,
+      <FlatButton label="确认" primary={true}  onClick={() => this.handleOpenDialog()} />,
+    ];
     return (
       <div>
         <div className="clearfix" style={styles.tools}>
@@ -211,6 +232,9 @@ class Nav extends React.Component {
             this.state.foods.length === 0 ? <div style={styles.nothing}> (゜v゜)つ什么都没有...</div> : null
           }
         </div>
+        <Dialog title="警告" actions={actions} modal={false} open={this.state.openDialog}>
+          是否确定删除？
+        </Dialog>
       </div>
     );
   }

@@ -42,7 +42,7 @@ class EditFood extends React.Component {
 
   fetchData() {
     const self = this;
-    requestGetData('getFoodById', self.props.match.params.id)
+    requestGetData('foods', `id=${self.props.match.params.id}`)
       .then((res) => {
         self.setState({ food: res.data });
       })
@@ -53,7 +53,7 @@ class EditFood extends React.Component {
 
   getCategoryList() {
     const self = this;
-    requestGetData('getCategorylist')
+    requestGetData('categories')
       .then((res) => {
         self.setState({ categoryList: res.data });
       })
@@ -64,7 +64,7 @@ class EditFood extends React.Component {
 
   getCouponList() {
     const self = this;
-    requestGetData('getCouponList')
+    requestGetData('coupons')
       .then((res) => {
         self.setState({ couponList: res.data });
       })
@@ -136,7 +136,7 @@ class EditFood extends React.Component {
     const food = { foodName, description, price, imageUrl, sellout, category, coupon }; 
 
     if (this.state.isAddingStatus) {
-      requestPostData('createFood', food)
+      requestPostData('foods', food)
         .then((res) => {
           if (res.status === 201) {
             self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { self.closeAlert() });
@@ -150,7 +150,7 @@ class EditFood extends React.Component {
         });
     } else {
       food._id = this.state.food._id;
-      requestPatchData('updateFood', self.props.match.params.id, food)
+      requestPatchData('foods', self.props.match.params.id, food)
         .then((res) => {
           if (res.status === 200) {
             self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { self.closeAlert() });
