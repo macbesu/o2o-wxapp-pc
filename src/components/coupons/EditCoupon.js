@@ -1,12 +1,11 @@
 import React from 'react';
 
 import { requestGetData, requestDeleteData, requestPostData, requestPatchData } from '../../config/api';
-import { CardDetailText, CardDetailTools, CardDetailSelect } from '../utils/CardDetailItem';
+import { CardDetailText, CardDetailTools } from '../utils/CardDetailItem';
 import Paper from 'material-ui/Paper';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Snackbar from 'material-ui/Snackbar';
 
 class EditCoupon extends React.Component {
@@ -18,12 +17,12 @@ class EditCoupon extends React.Component {
       alertMsg: '',
       coupon: {
         _id: '',
-        couponType: '',
+        couponType: -1,
         value: '',
         limit: '',
         remark: '',
-        selectCouponType: '0',
       },
+      showDisc: null,
     };
   }
 
@@ -40,7 +39,10 @@ class EditCoupon extends React.Component {
     const self = this;
     requestGetData('coupons', `id=${self.props.match.params.id}`)
       .then((res) => {
-        self.setState({ coupon: res.data });
+        self.setState({ 
+          coupon: res.data,
+          showDisc: res.data.couponType === 0 ? res.data.value : null
+        });
       })
       .catch((e) => {
         console.error(e);
@@ -73,11 +75,30 @@ class EditCoupon extends React.Component {
   }
 
   changeCouponType(e, val) {
-    this.setState({ selectCouponType: val })
+    const coupon = Object.assign({}, this.state.coupon);
+    coupon.couponType = parseInt(val);
+    this.setState({ coupon });
   }
 
   handleDiscountChange(e, val) {
+    const num = Number(val);
+    const len = val.length;
+    if (!isNaN(num) && (len <= 2) && val[0] !== '0') {
+      const coupon = Object.assign({}, this.state.coupon);
+      coupon.limit = null;
+      len === 0 ? coupon.value = '' : coupon.value = num * 1.0 / (10 ** len);
+      this.setState({ coupon }, () => {
+        // console.warn(`coupon value: ${this.state.coupon.value}`)
+      });
+    }
+  }
 
+  handleOffLimitChange(e, val) {
+    this.setState({ selectCouponType: val })
+  }
+
+  handleOffValueChange(e, val) {
+    this.setState({ selectCouponType: val })
   }
 
   render() {
@@ -96,26 +117,72 @@ class EditCoupon extends React.Component {
             优惠券类型
           </div>
           <div className="card-detail-item-text">
-            <RadioButtonGroup name="couponType" defaultSelected="" onChange={(e, val) => this.changeCouponType(e, val)} style={{display:'flex'}} >
-              <RadioButton value="0" label="打折" style={{ width: '200px' }}/>
-              <RadioButton value="1" label="满减" />
+            <RadioButtonGroup 
+              name="couponType"
+              valueSelected={this.state.coupon.couponType}
+              onChange={(e, val) => this.changeCouponType(e, val)} 
+              style={{display:'flex'}} 
+            >
+              <RadioButton 
+                value={0} 
+                label="打折" 
+                disabled={!this.state.isAddingStatus && this.state.coupon.couponType === 1} 
+                style={{ width: '200px' }}
+              />
+              <RadioButton 
+                value={1} 
+                label="满减" 
+                disabled={!this.state.isAddingStatus && this.state.coupon.couponType === 0}
+              />
             </RadioButtonGroup>
           </div>
         </div>
-        <div className="card-detail-item">
-          <div className="card-detail-item-label">
-            打折额度
-          </div>
-          <div className="card-detail-item-text">
-            <TextField 
-              name="discount" 
-              value={this.state.discount} 
-              style={{ width: '60px' }} 
-              onChange={(e, val) => this.handleDiscountChange(e, val)}
-            /> 
-            <span style={{ marginTop: '12px' }}>折</span>
-          </div>
-        </div>
+        {
+          this.state.coupon.couponType === 0 ?
+          <div className="card-detail-item">
+            <div className="card-detail-item-label">
+              打折额度
+            </div>
+            <div className="card-detail-item-text">
+              <span style={{ marginTop: '15px' }}>0.&nbsp;</span>
+              <TextField 
+                name="discount" 
+                value={ this.state.coupon.value ? this.state.coupon.value * (10 ** (`${this.state.coupon.value}`.length - 2)) : '' } 
+                style={{ width: '40px' }} 
+                onChange={(e, val) => this.handleDiscountChange(e, val)}
+              /> 
+            </div> 
+          </div> : null
+        }
+        {
+          this.state.coupon.couponType === 1 ?
+          <div className="card-detail-item">
+            <div className="card-detail-item-label">
+              满减额度
+            </div>
+            <div className="card-detail-item-text">
+              <span style={{ marginTop: '12px' }}>满&nbsp;</span>
+              <TextField 
+                name="discount" 
+                value={this.state.coupon.value * 10 || ''} 
+                style={{ width: '40px' }} 
+                onChange={(e, val) => this.handleOffLimitChange(e, val)}
+              /> 
+              <span style={{ marginTop: '12px' }}>减&nbsp;</span>
+              <TextField 
+                name="discount" 
+                value={this.state.coupon.value * 10 || ''} 
+                style={{ width: '40px' }} 
+                onChange={(e, val) => this.handleOffValueChange(e, val)}
+              /> 
+            </div> 
+          </div> : null
+        }
+        <CardDetailTools 
+          historyBack="/couponlist"
+          handleUpdate={() => this.handleSave()}
+          handleDelete={() => this.handleDelete()}
+        />
         <Snackbar
           open={this.state.alertOpen}
           message={this.state.alertMsg}
