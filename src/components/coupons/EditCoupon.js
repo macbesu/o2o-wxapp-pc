@@ -23,6 +23,8 @@ class EditCoupon extends React.Component {
         remark: '',
       },
       showDisc: null,
+      limitError: null,
+      valueError: null,
     };
   }
 
@@ -94,11 +96,34 @@ class EditCoupon extends React.Component {
   }
 
   handleOffLimitChange(e, val) {
-    this.setState({ selectCouponType: val })
+    const num = Number(val);
+    const len = val.length;
+    if (!isNaN(num) && len <= 4 && val !== '0') {
+      const coupon = Object.assign({}, this.state.coupon);
+      if (len === 0) {
+        coupon.limit = '';
+        this.setState({ coupon, limitError: '必填' });
+      } else {
+        coupon.limit = num ;
+        this.setState({ coupon, limitError: null, valueError: num < this.state.coupon.value ? '数值超出' : null });
+      }
+    } 
   }
 
   handleOffValueChange(e, val) {
-    this.setState({ selectCouponType: val })
+    const num = Number(val);
+    const len = val.length;
+    if (!isNaN(num) && len <= 4 && val !== '0') {
+      const coupon = Object.assign({}, this.state.coupon);
+      if (len === 0) {
+        coupon.value = '';
+        this.setState({ coupon, valueError: '必填' });
+      } else {
+        coupon.value = num ;
+        this.setState({ coupon, valueError: num > this.state.coupon.limit ? '数值超出' : null });
+      }
+    }
+    
   }
 
   render() {
@@ -163,16 +188,18 @@ class EditCoupon extends React.Component {
             <div className="card-detail-item-text">
               <span style={{ marginTop: '12px' }}>满&nbsp;</span>
               <TextField 
-                name="discount" 
-                value={this.state.coupon.value * 10 || ''} 
-                style={{ width: '40px' }} 
+                name="offlimit" 
+                value={this.state.coupon.limit} 
+                errorText={this.state.limitError}
+                style={{ width: '50px' }} 
                 onChange={(e, val) => this.handleOffLimitChange(e, val)}
               /> 
-              <span style={{ marginTop: '12px' }}>减&nbsp;</span>
+              <span style={{ marginTop: '12px' }}>&nbsp;减&nbsp;</span>
               <TextField 
-                name="discount" 
-                value={this.state.coupon.value * 10 || ''} 
-                style={{ width: '40px' }} 
+                name="offvalue" 
+                value={this.state.coupon.value} 
+                errorText={this.state.valueError}
+                style={{ width: '50px' }} 
                 onChange={(e, val) => this.handleOffValueChange(e, val)}
               /> 
             </div> 
