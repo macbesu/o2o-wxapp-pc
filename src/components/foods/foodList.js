@@ -178,7 +178,7 @@ class Nav extends React.Component {
             <TextField hintText="搜索食品" className="my-tools-textinput" onChange={(e, newValue) => this.handleNameChange(e, newValue) } />
           </div>
           <div className="pullRight">
-            <Link to="/editcoupon">
+            <Link to="/editfood">
               <RaisedButton label="增加" 
                 className="my-tools-btns"
                 labelPosition="before" 

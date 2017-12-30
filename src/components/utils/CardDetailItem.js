@@ -10,6 +10,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
 import { server, prefix, apiSet, token } from '../../config/api';
 
+/**
+ * CardDetailImage
+ */
 class CardDetailImage extends React.Component {
   constructor(props) {
     super();
@@ -62,6 +65,9 @@ class CardDetailImage extends React.Component {
   }
 }
 
+/**
+ * CardDetailText
+ */
 class CardDetailText extends React.Component {
   constructor(props) {
     super();
@@ -86,7 +92,7 @@ class CardDetailText extends React.Component {
   }
 
   render() {
-    const { label } = this.props;
+    const { label, styles, hintText } = this.props;
     const { text, textDisabled } = this.state;
     return (
       <div className="card-detail-item">
@@ -95,10 +101,10 @@ class CardDetailText extends React.Component {
         </div>
         <div className="card-detail-item-text">
           <TextField 
-            hintText={`请输入${label}`} 
+            hintText={!hintText ? `请输入${label}` : `${hintText}`} 
             value={text} 
             disabled={textDisabled}
-            style={{ minWidth: '300px' }}
+            style={ Object.assign({}, { minWidth: '300px' }, styles) }
             onChange={(e, text) => this.handleChange(e, text)}
           />
         </div>
@@ -107,6 +113,9 @@ class CardDetailText extends React.Component {
   }
 }
 
+/**
+ * CardDetailToggle
+ */
 class CardDetailToggle extends React.Component {
   constructor(props) {
     super();
@@ -153,6 +162,9 @@ class CardDetailToggle extends React.Component {
   }
 }
 
+/**
+ * CardDetailSelect
+ */
 class CardDetailSelect extends React.Component {
   constructor(props) {
     super();
@@ -206,6 +218,9 @@ class CardDetailSelect extends React.Component {
   }
 }
 
+/**
+ * CardDetailTools
+ */
 class CardDetailTools extends React.Component {
   constructor(props) {
     super();
@@ -246,7 +261,7 @@ class CardDetailTools extends React.Component {
       </div>
     );
   }
-  
+
 } 
 
 export {

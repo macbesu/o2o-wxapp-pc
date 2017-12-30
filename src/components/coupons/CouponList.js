@@ -108,7 +108,7 @@ class CouponList extends React.Component {
             </SelectField>
           </div>
           <div className="pullRight">
-            <Link to="/editcategory">
+            <Link to="/editcoupon">
               <RaisedButton label="增加" 
                 className="my-tools-btns"
                 labelPosition="before" 

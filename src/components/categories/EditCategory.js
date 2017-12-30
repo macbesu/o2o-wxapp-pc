@@ -92,11 +92,14 @@ class EditCategory extends React.Component {
   }
 
   handleDelete() {
-
-  }
-
-  closeAlert() {
-
+    const self = this;
+    requestDeleteData('categories', self.props.match.params.id)
+      .then((res) => {
+        self.props.history.replace('/categorylist');
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   render() {
