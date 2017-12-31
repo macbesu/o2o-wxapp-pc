@@ -53,7 +53,10 @@ class CouponList extends React.Component {
   }
 
   deleteAction() {
-    this.setState({ openDialog: true });
+    const selected = this.state.selected;
+    if (selected.length > 0 || selected === 'all') {
+      this.setState({ openDialog: true });
+    }
   }
 
   handleDelete() {
@@ -81,7 +84,7 @@ class CouponList extends React.Component {
     }
   }
 
-  handleOpenDialog() {
+  handleConfirmDelete() {
     if (this.state.selected.length > 0) {
       this.handleDelete();
     }
@@ -110,7 +113,7 @@ class CouponList extends React.Component {
 
   render() {
     const actions = [
-      <FlatButton label="确认" primary={false}  onClick={() => this.handleOpenDialog()} />,
+      <FlatButton label="确认" primary={false}  onClick={() => this.handleConfirmDelete()} />,
       <FlatButton label="取消" primary={true} keyboardFocused={true} onClick={() => this.handleCloseDialog()} />,
     ];
     return (

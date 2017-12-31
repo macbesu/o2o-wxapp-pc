@@ -74,7 +74,10 @@ class CategoryList extends React.Component {
   }
 
   deleteAction() {
-    this.setState({ openDialog: true });
+    const selected = this.state.selected;
+    if (selected.length > 0 || selected === 'all') {
+      this.setState({ openDialog: true });
+    } 
   }
 
   handleDelete() {
@@ -102,7 +105,7 @@ class CategoryList extends React.Component {
     }
   }
 
-  handleOpenDialog() {
+  handleComfirmDelete() {
     if (this.state.selected.length > 0) {
       this.handleDelete();
     }
@@ -115,7 +118,7 @@ class CategoryList extends React.Component {
 
   render() {
     const actions = [
-      <FlatButton label="确认" primary={false}  onClick={() => this.handleOpenDialog()} />,
+      <FlatButton label="确认" primary={false}  onClick={() => this.handleComfirmDelete()} />,
       <FlatButton label="取消" primary={true} keyboardFocused={true} onClick={() => this.handleCloseDialog()} />,
     ];
     return (
