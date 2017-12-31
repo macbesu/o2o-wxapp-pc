@@ -255,6 +255,7 @@ class EditFood extends React.Component {
         />
         <CardDetailTools 
           historyBack="/foodlist"
+          isAddingStatus={this.state.isAddingStatus}
           handleUpdate={() => this.handleSave()}
           handleDelete={() => this.handleDelete()}
         />

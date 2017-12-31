@@ -235,7 +235,7 @@ class CardDetailTools extends React.Component {
         margin: '0 16px 0 0',
       }
     }
-    const { historyBack } = this.props;
+    const { historyBack, isAddingStatus } = this.props;
     return (
       <div className="card-detail-item">
         <div className="card-detail-item-label">
@@ -255,6 +255,7 @@ class CardDetailTools extends React.Component {
             label="删除" 
             secondary={true} 
             style={styles.btn} 
+            disabled={isAddingStatus}
             onClick={ this.props.handleDelete } 
           />
         </div>

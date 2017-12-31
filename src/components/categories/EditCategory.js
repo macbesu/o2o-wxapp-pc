@@ -120,6 +120,7 @@ class EditCategory extends React.Component {
         />
         <CardDetailTools 
           historyBack="/categorylist"
+          isAddingStatus={this.state.isAddingStatus}
           handleUpdate={() => this.handleSave()}
           handleDelete={() => this.handleDelete()}
         />

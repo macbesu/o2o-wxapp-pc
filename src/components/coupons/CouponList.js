@@ -57,7 +57,28 @@ class CouponList extends React.Component {
   }
 
   handleDelete() {
-
+    const self = this;
+    const selected = this.state.selected;
+    if (selected.length > 0 || selected === 'all') {
+      let deleteItems = '';      
+      if (selected === 'all') {
+        const coupons = self.state.coupons;
+        for (let i = 0; i < coupons.length; i ++) {
+          deleteItems += coupons[i]._id + (i !== coupons.length - 1 ? '&' : '');
+        }
+      } else {
+        for (let i = 0; i < selected.length; i ++) {
+          deleteItems += this.state.coupons[selected[i]]._id + (i !== selected.length - 1 ? '&' : '');
+        }
+      }
+      requestDeleteData('coupons', deleteItems)
+        .then((res) => {
+          self.fetchData();
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    }
   }
 
   handleOpenDialog() {
@@ -130,6 +151,7 @@ class CouponList extends React.Component {
               <TableHeader displaySelectAll={true} adjustForCheckbox={true}>
                 <TableRow>
                   <TableHeaderColumn>名称</TableHeaderColumn>
+                  <TableHeaderColumn>类型</TableHeaderColumn>
                   <TableHeaderColumn>操作</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
@@ -138,6 +160,7 @@ class CouponList extends React.Component {
                   this.state.filterCoupons.map((item, index) =>
                     <TableRow key={item._id} selected={this.isSelected(index)}>
                       <TableRowColumn>{item.remark}</TableRowColumn>
+                      <TableRowColumn>{item.couponType === 0 ? '打折' : '满减'}</TableRowColumn>
                       <TableRowColumn>
                         <Link to={`/editcoupon/${item._id}`} className="my-table-checkMore">查看 / 修改</Link>
                       </TableRowColumn>
