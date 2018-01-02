@@ -152,7 +152,7 @@ class EditFood extends React.Component {
               self.closeAlert(); 
             });
           } else {
-            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message;
+            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message || '出错了, 联系开发者010-26277567';
             self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
           }
         })
@@ -169,7 +169,7 @@ class EditFood extends React.Component {
               self.closeAlert(); 
             });
           } else {
-            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message;
+            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message || '出错了, 联系开发者010-26277567';
             self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
           }
         })
@@ -209,7 +209,12 @@ class EditFood extends React.Component {
     ];
     return (
       <div className="card-detail-box">
-        <CardDetailImage label={'图片'} imageUrl={this.state.food.imageUrl}  upload={file => this.afterUpload(file)}/>
+        <CardDetailImage 
+          label={'图片'} 
+          imageUrl={this.state.food.imageUrl}  
+          upload={file => this.afterUpload(file)}
+          closeAlert={() => this.closeAlert()}
+        />
         {
           !this.state.isAddingStatus ? 
           <CardDetailText 

@@ -73,7 +73,7 @@ class EditCoupon extends React.Component {
                 self.closeAlert(); 
               });
             } else {
-              const errMsg = JSON.parse(JSON.stringify(res)).response.data.errmsg;
+              const errMsg = JSON.parse(JSON.stringify(res)).response.data.errmsg || '出错了, 联系开发者010-26277567';
               self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
             }
           })
@@ -90,7 +90,7 @@ class EditCoupon extends React.Component {
                 self.closeAlert(); 
               });
             } else {
-              const errMsg = JSON.parse(JSON.stringify(res)).response.data.errmsg;
+              const errMsg = JSON.parse(JSON.stringify(res)).response.data.errmsg || '出错了, 联系开发者010-26277567';
               self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
             }
           })

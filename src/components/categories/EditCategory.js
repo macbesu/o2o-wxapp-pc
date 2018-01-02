@@ -64,7 +64,7 @@ class EditCategory extends React.Component {
               self.closeAlert(); 
             });
           } else {
-            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message;
+            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message || '出错了, 联系开发者010-26277567';
             self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
           }
         })
@@ -81,7 +81,7 @@ class EditCategory extends React.Component {
               self.closeAlert(); 
             });
           } else {
-            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message;
+            const errMsg = JSON.parse(JSON.stringify(res)).response.data.message || '出错了, 联系开发者010-26277567';
             self.setState({ alertOpen: true, alertMsg: `✘ ${errMsg} ！` }, () => { self.closeAlert() });
           }
         })

@@ -39,7 +39,7 @@ class CardDetailImage extends React.Component {
       },
       onError(err) {
         console.log('onError', err);
-        self.setState({ alertOpen: true, alertMsg: '✘ 上传失败！' }, () => { self.closeAlert() });
+        self.setState({ alertOpen: true, alertMsg: '✘ 上传失败！' }, () => { props.closeAlert });
       },
     };
     this.state = {
