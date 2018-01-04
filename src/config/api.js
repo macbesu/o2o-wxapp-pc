@@ -2,34 +2,12 @@ import axios from 'axios';
 
 export const server = 'http://localhost:3000/';
 export const prefix = 'api/v1/';
-export const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTJiZGEyY2M2NjJlMTJjYTgyNGY3MDQiLCJpYXQiOjE1MTMwNTUxODV9.WG5nUZ2otCuBdZEig-XeY9ZdZi9qzoJomb9a5wSCAjo';
+export const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRjZGZkODUxOTVlMjQzYTVmNDVmNjEiLCJpYXQiOjE1MTQ5ODc1MDZ9.VOcj8P4Sg5DMql-DO8OImp9D6uU27vCeu-lKahqFY4';
 
 export const apiSet = {
-  /**
-   * foods
-   */
   foods: 'foods',
-  // getFoodList: 'foods', // GET
-  // getFoodById: 'foods', // GET
-  // createFood: 'foods', // POST
-  // updateFood: 'foods', // PATCH
-  // deleteFood: 'foods', // DELETE
-
-  /**
-   * categories
-   */
   categories: 'categories',
-  // getCategorylist: 'categories/',
-
-  /**
-   * coupons
-   */
   coupons: 'coupons',
-  // getCouponList: 'coupons/',
-
-  /**
-   * files
-   */
   uploadFile: 'files/upload'
 };
 
