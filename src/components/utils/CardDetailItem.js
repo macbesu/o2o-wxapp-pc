@@ -235,30 +235,40 @@ class CardDetailTools extends React.Component {
         margin: '0 16px 0 0',
       }
     }
-    const { historyBack, isAddingStatus } = this.props;
+    const { historyBack, isAddingStatus, onlyReturn } = this.props;
     return (
       <div className="card-detail-item">
         <div className="card-detail-item-label">
           操作：
         </div>
-        <div className="card-detail-item-tools">
-          <Link to={`${historyBack}`}>
-            <RaisedButton label="返回" style={styles.btn} />
-          </Link>
-          <RaisedButton 
-            label="保存" 
-            primary={true} 
-            style={styles.btn} 
-            onClick={ this.props.handleUpdate } 
-          />
-          <RaisedButton 
-            label="删除" 
-            secondary={true} 
-            style={styles.btn} 
-            disabled={isAddingStatus}
-            onClick={ this.props.handleDelete } 
-          />
-        </div>
+        {
+          onlyReturn 
+          ?
+          <div className="card-detail-item-tools">
+            <Link to={`${historyBack}`}>
+              <RaisedButton label="返回" style={styles.btn} />
+            </Link>
+          </div> 
+          :
+          <div className="card-detail-item-tools">
+            <Link to={`${historyBack}`}>
+              <RaisedButton label="返回" style={styles.btn} />
+            </Link>
+            <RaisedButton 
+              label="保存" 
+              primary={true} 
+              style={styles.btn} 
+              onClick={ this.props.handleUpdate } 
+            />
+            <RaisedButton 
+              label="删除" 
+              secondary={true} 
+              style={styles.btn} 
+              disabled={isAddingStatus}
+              onClick={ this.props.handleDelete } 
+            />
+          </div>
+        }
       </div>
     );
   }

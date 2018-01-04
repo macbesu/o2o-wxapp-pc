@@ -2,13 +2,14 @@ import axios from 'axios';
 
 export const server = 'http://localhost:3000/';
 export const prefix = 'api/v1/';
-export const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRjZGZkODUxOTVlMjQzYTVmNDVmNjEiLCJpYXQiOjE1MTQ5ODc1MDZ9.VOcj8P4Sg5DMql-DO8OImp9D6uU27vCeu-lKahqFY4';
+export const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRjYmM5ZjAxYzk4NzJlZDk2Y2M4ZjciLCJpYXQiOjE1MTUwNTk2NTJ9.CyXz2T5lqO4WHbvxjjqAL6XT79AV18bI1DgJ_9VPXRE';
 
 export const apiSet = {
   foods: 'foods',
   categories: 'categories',
   coupons: 'coupons',
-  uploadFile: 'files/upload'
+  users: 'users',
+  uploadFile: 'files/upload',
 };
 
 const checkValidUrl = (url) => {
@@ -32,7 +33,11 @@ const checkValidReqData = (data) => {
 export function requestGetData(url, params='') {
   checkValidUrl(url);
   checkValidParams(params);
-  return axios.get(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`)
+  return axios.get(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`, {
+    headers: {
+      Authorization: token,
+    },
+  })
     .then((res) => {
       return res;
     })

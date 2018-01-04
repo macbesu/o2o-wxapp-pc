@@ -46,7 +46,7 @@ class Nav extends React.Component {
             <NavLink to={`/couponlist`} style={styles.navlink} activeStyle={styles.activeStyle}>
               <MenuItem primaryText="优惠券" rightIcon={<CouponIcon />} />
             </NavLink>
-            <NavLink to={`/couponlist1`} style={styles.navlink} activeStyle={styles.activeStyle}>
+            <NavLink to={`/userlist`} style={styles.navlink} activeStyle={styles.activeStyle}>
               <MenuItem primaryText="用户" rightIcon={<UserIcon />} />
             </NavLink>
           </Menu>
