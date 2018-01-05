@@ -65,7 +65,7 @@ class EditCoupon extends React.Component {
       if (couponType === 0) coupon.limit = null; 
       const self = this;
       if (this.state.isAddingStatus) {
-        requestPostData('coupons', coupon)
+        requestPostData('coupons', '', coupon)
           .then((res) => {
             if (res.status === 201) {
               self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { 

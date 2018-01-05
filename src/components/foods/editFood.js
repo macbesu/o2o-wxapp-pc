@@ -144,7 +144,7 @@ class EditFood extends React.Component {
     const food = { foodName, description, price, imageUrl, sellout, category, coupon }; 
 
     if (this.state.isAddingStatus) {
-      requestPostData('foods', food)
+      requestPostData('foods', '', food)
         .then((res) => {
           if (res.status === 201) {
             self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { 

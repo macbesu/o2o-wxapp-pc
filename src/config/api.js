@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const server = 'http://localhost:3000/';
 export const prefix = 'api/v1/';
-export const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRjYmM5ZjAxYzk4NzJlZDk2Y2M4ZjciLCJpYXQiOjE1MTUwNTk2NTJ9.CyXz2T5lqO4WHbvxjjqAL6XT79AV18bI1DgJ_9VPXRE';
+export const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRlMjRhMGQwMTk3NDdmZjUwOGE0NGEiLCJpYXQiOjE1MTUwNzA2NTh9.bZbkimyghWwopIFKKdr2wFgKD9LZpCF2rhZw8di9A0A';
 
 export const apiSet = {
   foods: 'foods',
@@ -46,10 +46,11 @@ export function requestGetData(url, params='') {
     });
 }
 
-export function requestPostData(url, data) {
+export function requestPostData(url, params='', data) {
   checkValidUrl(url);
+  checkValidParams(params);
   checkValidReqData(data);
-  return axios.post(`${server}${prefix}${apiSet[url]}`, data, {
+  return axios.post(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`, data, {
     headers: {
       Authorization: token,
     },

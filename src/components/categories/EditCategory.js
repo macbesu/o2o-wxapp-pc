@@ -56,7 +56,7 @@ class EditCategory extends React.Component {
     const category = { categoryName };
     const self = this;
     if (this.state.isAddingStatus) {
-      requestPostData('categories', category)
+      requestPostData('categories', '', category)
         .then((res) => {
           if (res.status === 201) {
             self.setState({ alertOpen: true, alertMsg: '√ 保存成功！' }, () => { 

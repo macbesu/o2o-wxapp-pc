@@ -51,7 +51,7 @@ class UserList extends React.Component {
   }
 
   search() {
-    const str = `userName=${this.state.userNameFilter}`;
+    const str = `fullName=${this.state.userFilter}`;
     const self = this;
     requestGetData('users', str)
       .then((res) => {
@@ -69,7 +69,7 @@ class UserList extends React.Component {
       <div>
         <div className="clearfix my-tools">
           <div className="pullLeft">
-            <TextField hintText="搜索分类" className="my-tools-textinput" onChange={(e, newValue) => this.handleNameChange(e, newValue) } />
+            <TextField hintText="搜索名字" className="my-tools-textinput" onChange={(e, newValue) => this.handleNameChange(e, newValue) } />
           </div>
         </div>
         <div className="my-table">
@@ -96,7 +96,7 @@ class UserList extends React.Component {
                       <TableRowColumn>{item.birthday}</TableRowColumn>
                       <TableRowColumn>{item.address}</TableRowColumn>
                       <TableRowColumn>
-                        <Link to={`/edituser/${item._id}`} className="my-table-checkMore">查看 / 修改</Link>
+                        <Link to={`/edituser/${item._id}`} className="my-table-checkMore">查看 / 详情</Link>
                       </TableRowColumn>
                     </TableRow>)
                 }
