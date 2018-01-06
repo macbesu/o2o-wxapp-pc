@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const server = 'http://localhost:3000/';
-export const prefix = 'api/v1/';
-export const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRlMjRhMGQwMTk3NDdmZjUwOGE0NGEiLCJpYXQiOjE1MTUwNzA2NTh9.bZbkimyghWwopIFKKdr2wFgKD9LZpCF2rhZw8di9A0A';
+export const SERVER = 'http://localhost:3000/';
+export const PREFIX = 'api/v1/';
+export const TOKEN = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRlMjRhMGQwMTk3NDdmZjUwOGE0NGEiLCJpYXQiOjE1MTUwNzA2NTh9.bZbkimyghWwopIFKKdr2wFgKD9LZpCF2rhZw8di9A0A';
 
 export const apiSet = {
   foods: 'foods',
@@ -33,9 +33,9 @@ const checkValidReqData = (data) => {
 export function requestGetData(url, params='') {
   checkValidUrl(url);
   checkValidParams(params);
-  return axios.get(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`, {
+  return axios.get(`${SERVER}${PREFIX}${apiSet[url]}${params?`/${params}`:''}`, {
     headers: {
-      Authorization: token,
+      Authorization: TOKEN,
     },
   })
     .then((res) => {
@@ -50,9 +50,9 @@ export function requestPostData(url, params='', data) {
   checkValidUrl(url);
   checkValidParams(params);
   checkValidReqData(data);
-  return axios.post(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`, data, {
+  return axios.post(`${SERVER}${PREFIX}${apiSet[url]}${params?`/${params}`:''}`, data, {
     headers: {
-      Authorization: token,
+      Authorization: TOKEN,
     },
   })
     .then((res) => {
@@ -67,9 +67,9 @@ export function requestPatchData(url, params='', data) {
   checkValidUrl(url);
   checkValidParams(params);
   checkValidReqData(data);
-  return axios.patch(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`, data, {
+  return axios.patch(`${SERVER}${PREFIX}${apiSet[url]}${params?`/${params}`:''}`, data, {
     headers: {
-      Authorization: token,
+      Authorization: TOKEN,
     },
   })
     .then((res) => {
@@ -83,9 +83,9 @@ export function requestPatchData(url, params='', data) {
 export function requestDeleteData(url, params='') {
   checkValidUrl(url);
   checkValidParams(params);
-  return axios.delete(`${server}${prefix}${apiSet[url]}${params?`/${params}`:''}`, {
+  return axios.delete(`${SERVER}${PREFIX}${apiSet[url]}${params?`/${params}`:''}`, {
     headers: {
-      Authorization: token,
+      Authorization: TOKEN,
     },
   })
     .then((res) => {
