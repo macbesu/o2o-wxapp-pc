@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { requestGetData, requestDeleteData } from '../../config/api';
-import { CardDetailText, CardDetailTools } from '../utils/CardDetailItem';
+import { CardDetailImage, CardDetailText, CardDetailTools } from '../utils/CardDetailItem';
 import Paper from 'material-ui/Paper';
 import Snackbar from 'material-ui/Snackbar';
 
@@ -37,6 +37,11 @@ class EditUser extends React.Component {
   render() {
     return (
       <div className="card-detail-box">
+        <CardDetailImage 
+          label={'图片'} 
+          imageUrl={this.state.user.avatar} 
+          disabled={true}
+        />
         <CardDetailText 
           label={'ID'} 
           text={this.state.user._id} 

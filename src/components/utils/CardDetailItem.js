@@ -47,13 +47,13 @@ class CardDetailImage extends React.Component {
   }
 
   render() {
-    const { label, imageUrl } = this.props;
+    const { label, imageUrl, disabled } = this.props;
     return (
       <div className="card-detail-item">
         <div className="card-detail-item-label">
           {label}：
         </div>
-        <Upload {...this.uploaderProps} ref="inner">
+        <Upload {...this.uploaderProps} ref="inner" disabled={disabled ? true : false}>
           <div className="card-detail-item-image">
             {
               imageUrl ? <img src={SERVER + imageUrl} /> : <div className="card-detail-item-default-img"></div>

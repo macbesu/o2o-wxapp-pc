@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { requestGetData, requestDeleteData } from '../../config/api';
+import { SERVER, requestGetData, requestDeleteData } from '../../config/api';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Dialog from 'material-ui/Dialog';
 import Paper from 'material-ui/Paper';
@@ -78,24 +78,28 @@ class UserList extends React.Component {
             <Table>
               <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                 <TableRow>
+                  <TableHeaderColumn style={tableColStyles.col1}>头像</TableHeaderColumn>
                   <TableHeaderColumn>名称</TableHeaderColumn>
                   <TableHeaderColumn>手机号</TableHeaderColumn>
                   <TableHeaderColumn>邮箱</TableHeaderColumn>
                   <TableHeaderColumn>生日</TableHeaderColumn>
                   <TableHeaderColumn>地址</TableHeaderColumn>
-                  <TableHeaderColumn>操作</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col2}>操作</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody displayRowCheckbox={false} stripedRows={false} deselectOnClickaway={false}>
                 {
                   this.state.users.map((item, index) =>
                     <TableRow key={item._id}>
+                      <TableRowColumn style={tableColStyles.col1}>
+                        <img src={SERVER + item.avatar} style={styles.images}/>
+                      </TableRowColumn>
                       <TableRowColumn>{item.fullName}</TableRowColumn>
                       <TableRowColumn>{item.phone}</TableRowColumn>
                       <TableRowColumn>{item.email}</TableRowColumn>
                       <TableRowColumn>{item.birthday}</TableRowColumn>
                       <TableRowColumn>{item.address}</TableRowColumn>
-                      <TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col2}>
                         <Link to={`/edituser/${item._id}`} className="my-table-checkMore">查看 / 详情</Link>
                       </TableRowColumn>
                     </TableRow>)
@@ -113,5 +117,20 @@ class UserList extends React.Component {
     );
   }
 }
+
+const styles = {
+  images: {
+    width: '100%',
+    height: '40px',
+    borderRadius: '50%',
+  },
+};
+
+const tableColStyles = {
+  col1: {
+    width: '40px',
+    textAlign: 'center',
+  },
+};
 
 export default UserList;
