@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { requestGetData, requestDeleteData } from '../../config/api';
+import { SERVER, requestGetData, requestDeleteData } from '../../config/api';
 import Dialog from 'material-ui/Dialog';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -217,7 +217,7 @@ class Nav extends React.Component {
                   this.state.foods.map((item, index) =>
                     <TableRow key={item._id} selected={this.isSelected(index)}>
                       <TableRowColumn style={tableColStyles.col1}>
-                        <img src={item.imageUrl} style={styles.images}/>
+                        <img src={SERVER + item.imageUrl} style={styles.images}/>
                       </TableRowColumn>
                       <TableRowColumn>{item.foodName}</TableRowColumn>
                       <TableRowColumn>{item.price}</TableRowColumn>

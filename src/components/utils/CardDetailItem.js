@@ -56,7 +56,7 @@ class CardDetailImage extends React.Component {
         <Upload {...this.uploaderProps} ref="inner">
           <div className="card-detail-item-image">
             {
-              imageUrl ? <img src={imageUrl} /> : <div className="card-detail-item-default-img"></div>
+              imageUrl ? <img src={SERVER + imageUrl} /> : <div className="card-detail-item-default-img"></div>
             }
           </div>
         </Upload>
