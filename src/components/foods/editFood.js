@@ -6,7 +6,7 @@ import Paper from 'material-ui/Paper';
 import Snackbar from 'material-ui/Snackbar';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { server } from '../../config/api';
+import { SERVER } from '../../config/api';
 
 class EditFood extends React.Component {
   constructor(props) {
@@ -128,7 +128,7 @@ class EditFood extends React.Component {
   
   afterUpload(file) {
     const food = Object.assign({}, this.state.food);
-    food.imageUrl = server + file.imageUrl;
+    food.imageUrl = SERVER + file.imageUrl;
     this.setState({ food });
   }
 

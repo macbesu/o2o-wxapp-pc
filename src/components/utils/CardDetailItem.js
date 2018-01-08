@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
-import { server, prefix, apiSet, token } from '../../config/api';
+import { SERVER, PREFIX, APISET, TOKEN } from '../../config/api';
 
 /**
  * CardDetailImage
@@ -18,10 +18,10 @@ class CardDetailImage extends React.Component {
     super();
     const self = this;
     this.uploaderProps = {
-      action: server + prefix + apiSet['uploadFile'],
+      action: SERVER + PREFIX + APISET['uploadFile'],
       data: { a: 1, b: 2 },
       headers: {
-        Authorization: token,
+        Authorization: TOKEN,
       },
       multiple: true,
       beforeUpload(file) {
