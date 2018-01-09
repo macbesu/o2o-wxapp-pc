@@ -257,7 +257,7 @@ const styles = {
 
 const tableColStyles = {
   col1: {
-    width: '40px',
+    width: '60px',
     textAlign: 'center',
   },
   col2: {
