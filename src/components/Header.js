@@ -13,7 +13,7 @@ class Header extends React.Component {
   }
 
   componentWillMount() {
-    const isLogined = sessionStorage.getItem('isLogined');
+    const isLogined = localStorage.getItem('isLogined');
     this.setState({ isLogined });
   }
 
@@ -22,11 +22,11 @@ class Header extends React.Component {
     const currLoc = location.hash.replace(/[\#\/]/g, '');
     if (currLoc !== 'login') {
       if (isLogined) {
-        sessionStorage.removeItem('isLogined');
-        sessionStorage.removeItem('user_id');
-        sessionStorage.removeItem('token');
+        localStorage.removeItem('isLogined');
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('token');
       } else {
-        sessionStorage.setItem('isLogined', true);
+        localStorage.setItem('isLogined', true);
       }
       this.setState({ isLogined: !isLogined });
       location.href = "/#/login";

@@ -39,7 +39,7 @@ class UserList extends React.Component {
       }); 
   }
 
-  handleNameChange(e, newValue) {
+  handlePhoneChange(e, newValue) {
     let str = newValue.replace(/(^\s+)|(\s+$)/g, '');
     str === '' ? str = '*' : null;
     this.setState({
@@ -51,7 +51,7 @@ class UserList extends React.Component {
   }
 
   search() {
-    const str = `fullName=${this.state.userFilter}`;
+    const str = `phone=${this.state.userFilter}`;
     const self = this;
     requestGetData('users', str)
       .then((res) => {
@@ -69,7 +69,7 @@ class UserList extends React.Component {
       <div>
         <div className="clearfix my-tools">
           <div className="pullLeft">
-            <TextField hintText="搜索名字" className="my-tools-textinput" onChange={(e, newValue) => this.handleNameChange(e, newValue) } />
+            <TextField hintText="搜索手机" className="my-tools-textinput" onChange={(e, newValue) => this.handlePhoneChange(e, newValue) } />
           </div>
         </div>
         <div className="my-table">

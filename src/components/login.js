@@ -16,10 +16,6 @@ class Login extends React.Component {
     };
   }
 
-  componentWillMount() {
-
-  }
-
   actionLogin() {
     const { phone, password } = this.state;
     if (phone && password) {
@@ -38,9 +34,9 @@ class Login extends React.Component {
     requestPostData('users', 'login', data)
       .then((res) => {
         if (res.status === 200) {
-          sessionStorage.setItem('isLogined', true);
-          sessionStorage.setItem('user_id', res.data._id);
-          sessionStorage.setItem('token', res.data.token);
+          localStorage.setItem('isLogined', true);
+          localStorage.setItem('user_id', res.data._id);
+          localStorage.setItem('token', res.data.token);
           location.href = "/#/foodlist";
           location.reload();
           self.setState({

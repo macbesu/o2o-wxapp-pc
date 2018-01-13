@@ -196,20 +196,20 @@ class Nav extends React.Component {
             />
           </div>
         </div>
-        <div className="my-table">
+        <div className="my-table padding-table">
           {
             !this.state.loading ?
             <Table multiSelectable={true} onRowSelection={(selectedRows) => this.tableSelect(selectedRows)}>
               <TableHeader displaySelectAll={true} adjustForCheckbox={true}>
                 <TableRow>
                   <TableHeaderColumn style={tableColStyles.col1}>图片</TableHeaderColumn>
-                  <TableHeaderColumn>名称</TableHeaderColumn>
-                  <TableHeaderColumn>价格</TableHeaderColumn>
-                  <TableHeaderColumn>介绍</TableHeaderColumn>
-                  <TableHeaderColumn>分类</TableHeaderColumn>
-                  <TableHeaderColumn>是否售罄</TableHeaderColumn>
-                  <TableHeaderColumn>优惠券</TableHeaderColumn>
-                  <TableHeaderColumn style={tableColStyles.col2}>操作</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col2}>名称</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col3}>价格</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col4}>介绍</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col5}>分类</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col6}>是否售罄</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col7}>优惠券</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col8}>操作</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody displayRowCheckbox={true} stripedRows={false} deselectOnClickaway={false}>
@@ -219,13 +219,13 @@ class Nav extends React.Component {
                       <TableRowColumn style={tableColStyles.col1}>
                         <img src={SERVER + item.imageUrl} style={styles.images}/>
                       </TableRowColumn>
-                      <TableRowColumn>{item.foodName}</TableRowColumn>
-                      <TableRowColumn>{item.price}</TableRowColumn>
-                      <TableRowColumn>{item.description}</TableRowColumn>
-                      <TableRowColumn>{item.category ? item.category.categoryName : '(无)'}</TableRowColumn>
-                      <TableRowColumn>{item.sellout ? '是' : '否'}</TableRowColumn>
-                      <TableRowColumn>{item.coupon ? item.coupon.remark : '(无)'}</TableRowColumn>
-                      <TableRowColumn style={tableColStyles.col2}>
+                      <TableRowColumn style={tableColStyles.col2}>{item.foodName}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col3}>¥ {item.price}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col4}>{item.description}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col5}>{item.category ? item.category.categoryName : '(无)'}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col6}>{item.sellout ? '是' : '否'}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col7}>{item.coupon ? item.coupon.remark : '(无)'}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col8}>
                         <Link to={`/editfood/${item._id}`} className="my-table-checkMore">查看 / 修改</Link>
                       </TableRowColumn>
                     </TableRow>)
@@ -261,6 +261,24 @@ const tableColStyles = {
     textAlign: 'center',
   },
   col2: {
+    width: '120px',
+  },
+  col3: {
+    width: '40px',
+  },
+  col4: {
+    
+  },
+  col5: {
+    width: '60px',
+  },
+  col6: {
+    width: '60px',
+  },
+  col7: {
+    width: '60px',
+  },
+  col8: {
     width: '68px',
     textAlign: 'center',
   },

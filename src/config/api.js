@@ -2,11 +2,13 @@ import axios from 'axios';
 
 export const SERVER = 'http://localhost:3000/';
 export const PREFIX = 'api/v1/';
-export const TOKEN = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTRlMjRhMGQwMTk3NDdmZjUwOGE0NGEiLCJpYXQiOjE1MTUwNzA2NTh9.bZbkimyghWwopIFKKdr2wFgKD9LZpCF2rhZw8di9A0A';
+export const TOKEN = localStorage.getItem('token') || null;
+
 
 export const APISET = {
   foods: 'foods',
   categories: 'categories',
+  orders: 'orders',
   coupons: 'coupons',
   users: 'users',
   uploadFile: 'files/uploadMenu',
