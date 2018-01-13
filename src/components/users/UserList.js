@@ -72,19 +72,19 @@ class UserList extends React.Component {
             <TextField hintText="搜索手机" className="my-tools-textinput" onChange={(e, newValue) => this.handlePhoneChange(e, newValue) } />
           </div>
         </div>
-        <div className="my-table">
+        <div className="my-table padding-table">
           {
             !this.state.loading ?
             <Table>
               <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                 <TableRow>
                   <TableHeaderColumn style={tableColStyles.col1}>头像</TableHeaderColumn>
-                  <TableHeaderColumn>名称</TableHeaderColumn>
-                  <TableHeaderColumn>手机号</TableHeaderColumn>
-                  <TableHeaderColumn>邮箱</TableHeaderColumn>
-                  <TableHeaderColumn>生日</TableHeaderColumn>
-                  <TableHeaderColumn>地址</TableHeaderColumn>
-                  <TableHeaderColumn style={tableColStyles.col2}>操作</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col2}>名称</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col3}>手机号</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col4}>邮箱</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col5}>生日</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col6}>地址</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col7}>操作</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody displayRowCheckbox={false} stripedRows={false} deselectOnClickaway={false}>
@@ -94,12 +94,12 @@ class UserList extends React.Component {
                       <TableRowColumn style={tableColStyles.col1}>
                         <img src={SERVER + item.avatar} style={styles.images}/>
                       </TableRowColumn>
-                      <TableRowColumn>{item.fullName}</TableRowColumn>
-                      <TableRowColumn>{item.phone}</TableRowColumn>
-                      <TableRowColumn>{item.email}</TableRowColumn>
-                      <TableRowColumn>{item.birthday}</TableRowColumn>
-                      <TableRowColumn>{item.address}</TableRowColumn>
-                      <TableRowColumn style={tableColStyles.col2}>
+                      <TableRowColumn style={tableColStyles.col2}>{item.fullName}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col3}>{item.phone}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col4}>{item.email}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col5}>{item.birthday}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col6}>{item.address}</TableRowColumn>
+                      <TableRowColumn style={tableColStyles.col7}>
                         <Link to={`/edituser/${item._id}`} className="my-table-checkMore">查看 / 详情</Link>
                       </TableRowColumn>
                     </TableRow>)
@@ -128,7 +128,27 @@ const styles = {
 
 const tableColStyles = {
   col1: {
-    width: '40px',
+    width: '20px',
+    'verticalAlign': 'middle',
+    textAlign: 'center',
+  },
+  col2: {
+    width: '50px',
+  },
+  col3: {
+    width: '65px',
+  },
+  col4: {
+    width: '80px',
+  },
+  col5: {
+    width: '60px',
+  },
+  col6: {
+    width: '120px',
+  },
+  col7: {
+    width: '60px',
     textAlign: 'center',
   },
 };

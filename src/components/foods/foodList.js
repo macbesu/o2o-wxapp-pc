@@ -207,7 +207,7 @@ class Nav extends React.Component {
                   <TableHeaderColumn style={tableColStyles.col3}>价格</TableHeaderColumn>
                   <TableHeaderColumn style={tableColStyles.col4}>介绍</TableHeaderColumn>
                   <TableHeaderColumn style={tableColStyles.col5}>分类</TableHeaderColumn>
-                  <TableHeaderColumn style={tableColStyles.col6}>是否售罄</TableHeaderColumn>
+                  <TableHeaderColumn style={tableColStyles.col6}>售罄</TableHeaderColumn>
                   <TableHeaderColumn style={tableColStyles.col7}>优惠券</TableHeaderColumn>
                   <TableHeaderColumn style={tableColStyles.col8}>操作</TableHeaderColumn>
                 </TableRow>
@@ -267,13 +267,14 @@ const tableColStyles = {
     width: '40px',
   },
   col4: {
-    
+
   },
   col5: {
-    width: '60px',
+    width: '50px',
   },
   col6: {
-    width: '60px',
+    width: '50px',
+    textAlign: 'center',
   },
   col7: {
     width: '60px',
