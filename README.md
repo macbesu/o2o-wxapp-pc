@@ -24,6 +24,26 @@ $ npm run build
 $ npm run prettier
 ```
 
+## Demo
+
+Something wrong with my server.. So I can just show the effect by pictures as below.
+
+<img src="http://oxv4hyzep.bkt.clouddn.com/WX20180121-145104@2x.png" width="70%" /> 
+
+<img src="http://oxv4hyzep.bkt.clouddn.com/WX20180121-145157@2x.png" width="70%" /> 
+
+<img src="http://oxv4hyzep.bkt.clouddn.com/WechatIMG27140.jpeg" width="70%" /> 
+
+<img src="http://oxv4hyzep.bkt.clouddn.com/WechatIMG27141.jpeg" width="70%" />
+
+## Backend
+
+[https://github.com/ivanwarke/o2o-wxapp-bk](https://github.com/ivanwarke/o2o-wxapp-bk)
+
+## Test Data
+
+[https://github.com/ivanwarke/o2o-wxapp-bk/tree/master/mongo](https://github.com/ivanwarke/o2o-wxapp-bk/tree/master/mongo)
+
 ## Some Package
 
 ```json
@@ -50,26 +70,6 @@ $ npm run prettier
   "redux": "^3.7.2",
  }
 ```
-
-## Demo
-
-Something wrong with my server.. So I can just show the effect by pictures as below.
-
-<img src="http://oxv4hyzep.bkt.clouddn.com/WX20180121-145104@2x.png" width="70%" /> 
-
-<img src="http://oxv4hyzep.bkt.clouddn.com/WX20180121-145157@2x.png" width="70%" /> 
-
-<img src="http://oxv4hyzep.bkt.clouddn.com/WechatIMG27140.jpeg" width="70%" /> 
-
-<img src="http://oxv4hyzep.bkt.clouddn.com/WechatIMG27141.jpeg" width="70%" />
-
-## Backend
-
-[https://github.com/ivanwarke/o2o-wxapp-bk](https://github.com/ivanwarke/o2o-wxapp-bk)
-
-## Test Data
-
-[https://github.com/ivanwarke/o2o-wxapp-bk/tree/master/mongo](https://github.com/ivanwarke/o2o-wxapp-bk/tree/master/mongo)
 
 ## License
 
