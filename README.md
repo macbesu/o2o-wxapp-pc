@@ -42,7 +42,7 @@ $ npm run prettier
   "react-router": "^4.2.0",
   "react-router-dom": "^4.2.2",
   "webpack": "^3.10.0",
-  "webpack-dev-server": "^2.9.7"
+  "webpack-dev-server": "^2.9.7",
   "react": "^16.2.0",
   "react-dom": "^16.2.0",
   "react-redux": "^5.0.6",
