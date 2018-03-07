@@ -1,6 +1,6 @@
 # o2o-wxapp-pc
 
-🍕 a full-stack application about ordering the meal ( PC section for administrator).
+🍕 a full-stack application of ordering the meal ( PC section for administrator).
 
 ## Installation
 
