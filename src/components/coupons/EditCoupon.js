@@ -198,7 +198,7 @@ class EditCoupon extends React.Component {
                 value={0} 
                 label="打折" 
                 disabled={!this.state.isAddingStatus && this.state.coupon.couponType === 1} 
-                style={{ width: '200px' }}
+                style={{ width: '120px' }}
               />
               <RadioButton 
                 value={1} 
