@@ -28,13 +28,13 @@ $ npm run prettier
 
 Something wrong with my server.. So I can just show the effect by pictures as below.
 
-<img src="http://oxv4hyzep.bkt.clouddn.com/WX20180121-145104@2x.png" width="70%" /> 
+<img src="https://zjr-github.oss-cn-shenzhen.aliyuncs.com/zoranx.me/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1%E5%A4%96%E5%8D%96%E5%B9%B3%E5%8F%B0/WX20180121-145104@2x.png" width="70%" /> 
 
-<img src="http://oxv4hyzep.bkt.clouddn.com/WX20180121-145157@2x.png" width="70%" /> 
+<img src="https://zjr-github.oss-cn-shenzhen.aliyuncs.com/zoranx.me/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1%E5%A4%96%E5%8D%96%E5%B9%B3%E5%8F%B0/WX20180121-145157@2x.png" width="70%" /> 
 
-<img src="http://oxv4hyzep.bkt.clouddn.com/WechatIMG27140.jpeg" width="70%" /> 
+<img src="https://zjr-github.oss-cn-shenzhen.aliyuncs.com/zoranx.me/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1%E5%A4%96%E5%8D%96%E5%B9%B3%E5%8F%B0/WechatIMG27140.jpeg" width="70%" /> 
 
-<img src="http://oxv4hyzep.bkt.clouddn.com/WechatIMG27141.jpeg" width="70%" />
+<img src="https://zjr-github.oss-cn-shenzhen.aliyuncs.com/zoranx.me/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1%E5%A4%96%E5%8D%96%E5%B9%B3%E5%8F%B0/WechatIMG27141.jpeg" width="70%" />
 
 ## Backend
 
